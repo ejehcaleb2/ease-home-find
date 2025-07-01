@@ -1,7 +1,6 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
@@ -14,14 +13,14 @@ interface OTPVerificationProps {
   fullName: string;
   onBack: () => void;
   onSuccess: () => void;
-  demoOTP?: string;
 }
 
-const OTPVerification = ({ email, password, fullName, onBack, onSuccess, demoOTP }: OTPVerificationProps) => {
+const OTPVerification = ({ email, password, fullName, onBack, onSuccess }: OTPVerificationProps) => {
   const [otp, setOtp] = useState("");
   const [isVerifying, setIsVerifying] = useState(false);
+  const [isResending, setIsResending] = useState(false);
   const { toast } = useToast();
-  const { verifyOTP } = useAuth();
+  const { verifyOTP, sendOTP } = useAuth();
 
   const handleVerifyOTP = async () => {
     if (otp.length !== 6) {
@@ -54,6 +53,26 @@ const OTPVerification = ({ email, password, fullName, onBack, onSuccess, demoOTP
     setIsVerifying(false);
   };
 
+  const handleResendOTP = async () => {
+    setIsResending(true);
+    const { error } = await sendOTP(email);
+    
+    if (error) {
+      toast({
+        title: "Error",
+        description: error,
+        variant: "destructive",
+      });
+    } else {
+      toast({
+        title: "OTP Resent",
+        description: "Please check your email for the new verification code",
+      });
+    }
+    
+    setIsResending(false);
+  };
+
   return (
     <Card className="shadow-xl">
       <CardHeader className="space-y-1">
@@ -61,13 +80,6 @@ const OTPVerification = ({ email, password, fullName, onBack, onSuccess, demoOTP
         <CardDescription className="text-center">
           We've sent a 6-digit code to {email}
         </CardDescription>
-        {demoOTP && (
-          <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3">
-            <p className="text-sm text-yellow-800">
-              <strong>Demo OTP:</strong> {demoOTP}
-            </p>
-          </div>
-        )}
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="space-y-2">
@@ -95,14 +107,14 @@ const OTPVerification = ({ email, password, fullName, onBack, onSuccess, demoOTP
             variant="outline"
             onClick={onBack}
             className="flex-1"
-            disabled={isVerifying}
+            disabled={isVerifying || isResending}
           >
             Back
           </Button>
           <Button
             onClick={handleVerifyOTP}
             className="flex-1 bg-blue-600 hover:bg-blue-700"
-            disabled={isVerifying || otp.length !== 6}
+            disabled={isVerifying || otp.length !== 6 || isResending}
           >
             {isVerifying ? "Verifying..." : "Verify & Create Account"}
           </Button>
@@ -110,8 +122,12 @@ const OTPVerification = ({ email, password, fullName, onBack, onSuccess, demoOTP
 
         <div className="text-center text-sm text-gray-600">
           <p>Didn't receive the code?</p>
-          <button className="text-blue-600 hover:text-blue-500 font-medium">
-            Resend OTP
+          <button 
+            className="text-blue-600 hover:text-blue-500 font-medium disabled:opacity-50"
+            onClick={handleResendOTP}
+            disabled={isResending}
+          >
+            {isResending ? "Sending..." : "Resend OTP"}
           </button>
         </div>
       </CardContent>

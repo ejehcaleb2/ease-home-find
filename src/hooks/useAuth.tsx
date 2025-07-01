@@ -10,9 +10,10 @@ interface AuthContextType {
   userProfile: any | null;
   loading: boolean;
   signUp: (email: string, password: string, fullName: string) => Promise<{ error?: string }>;
-  sendOTP: (email: string) => Promise<{ error?: string; otp?: string }>;
+  sendOTP: (email: string) => Promise<{ error?: string }>;
   verifyOTP: (email: string, otp: string, password: string, fullName: string) => Promise<{ error?: string }>;
   signIn: (email: string, password: string) => Promise<{ error?: string }>;
+  signInWithGoogle: () => Promise<{ error?: string }>;
   signOut: () => Promise<void>;
 }
 
@@ -70,22 +71,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const sendOTP = async (email: string) => {
     try {
-      const response = await fetch(`https://wzsupjftqiwealmgkqqu.supabase.co/functions/v1/send-otp`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${supabase.supabaseKey}`,
-        },
-        body: JSON.stringify({ email }),
+      const { data, error } = await supabase.functions.invoke('send-otp', {
+        body: { email }
       });
 
-      const data = await response.json();
-      
-      if (!response.ok) {
-        return { error: data.error || 'Failed to send OTP' };
+      if (error) {
+        return { error: error.message };
       }
 
-      return { otp: data.otp }; // For demo purposes
+      return {};
     } catch (error) {
       console.error('Error sending OTP:', error);
       return { error: 'Failed to send OTP' };
@@ -94,19 +88,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const verifyOTP = async (email: string, otp: string, password: string, fullName: string) => {
     try {
-      const response = await fetch(`https://wzsupjftqiwealmgkqqu.supabase.co/functions/v1/verify-otp`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${supabase.supabaseKey}`,
-        },
-        body: JSON.stringify({ email, otp, password, fullName }),
+      const { data, error } = await supabase.functions.invoke('verify-otp', {
+        body: { email, otp, password, fullName }
       });
 
-      const data = await response.json();
-      
-      if (!response.ok) {
-        return { error: data.error || 'Failed to verify OTP' };
+      if (error) {
+        return { error: error.message };
       }
 
       return {};
@@ -149,6 +136,26 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  const signInWithGoogle = async () => {
+    try {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: `${window.location.origin}/`
+        }
+      });
+
+      if (error) {
+        return { error: error.message };
+      }
+
+      return {};
+    } catch (error) {
+      console.error('Error signing in with Google:', error);
+      return { error: 'Failed to sign in with Google' };
+    }
+  };
+
   const signOut = async () => {
     await supabase.auth.signOut();
     setUser(null);
@@ -166,6 +173,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       sendOTP,
       verifyOTP,
       signIn,
+      signInWithGoogle,
       signOut,
     }}>
       {children}

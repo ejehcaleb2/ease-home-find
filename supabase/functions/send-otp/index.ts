@@ -1,6 +1,7 @@
 
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
+import { Resend } from "https://esm.sh/resend@2.0.0"
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -51,16 +52,58 @@ serve(async (req) => {
       )
     }
 
-    // In a real implementation, you would send the email here
-    // For now, we'll just log it (you can see this in the function logs)
-    console.log(`OTP for ${email}: ${otpCode}`)
+    // Send email using Resend
+    const resendApiKey = Deno.env.get('RESEND_API_KEY')
+    
+    if (resendApiKey) {
+      const resend = new Resend(resendApiKey)
+      
+      try {
+        const emailResponse = await resend.emails.send({
+          from: "HomeEase <onboarding@resend.dev>",
+          to: [email],
+          subject: "Your HomeEase Verification Code",
+          html: `
+            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+              <div style="text-align: center; margin-bottom: 30px;">
+                <h1 style="color: #2563eb; margin: 0;">HomeEase</h1>
+                <p style="color: #64748b; margin: 5px 0;">Find your perfect home</p>
+              </div>
+              
+              <div style="background: #f8fafc; border-radius: 10px; padding: 30px; text-align: center;">
+                <h2 style="color: #1e293b; margin-bottom: 20px;">Email Verification</h2>
+                <p style="color: #475569; margin-bottom: 30px;">Enter this verification code to complete your registration:</p>
+                
+                <div style="background: white; border: 2px solid #e2e8f0; border-radius: 8px; padding: 20px; margin: 20px 0; display: inline-block;">
+                  <span style="font-size: 32px; font-weight: bold; color: #2563eb; letter-spacing: 8px;">${otpCode}</span>
+                </div>
+                
+                <p style="color: #64748b; font-size: 14px; margin-top: 20px;">
+                  This code will expire in 10 minutes for security reasons.
+                </p>
+              </div>
+              
+              <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #e2e8f0;">
+                <p style="color: #64748b; font-size: 12px;">
+                  If you didn't request this code, please ignore this email.
+                </p>
+              </div>
+            </div>
+          `,
+        })
 
-    // For demo purposes, return the OTP (remove this in production)
+        console.log('Email sent successfully:', emailResponse)
+      } catch (emailError) {
+        console.error('Error sending email:', emailError)
+        // Don't fail the request if email fails, just log it
+      }
+    } else {
+      console.log('RESEND_API_KEY not configured, OTP not sent via email')
+    }
+
     return new Response(
       JSON.stringify({ 
-        message: 'OTP sent successfully',
-        // Remove this line in production:
-        otp: otpCode 
+        message: 'OTP sent successfully'
       }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     )

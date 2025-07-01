@@ -62,7 +62,7 @@ const Auth = () => {
           variant: "destructive",
         });
       } else {
-        navigate("/dashboard");
+        navigate("/");
       }
     } else {
       // Sign up logic with OTP
@@ -97,7 +97,7 @@ const Auth = () => {
       }
 
       // Send OTP
-      const { error, otp } = await sendOTP(formData.email);
+      const { error } = await sendOTP(formData.email);
       
       if (error) {
         toast({
@@ -106,7 +106,6 @@ const Auth = () => {
           variant: "destructive",
         });
       } else {
-        setDemoOTP(otp || "");
         setShowOTPVerification(true);
         toast({
           title: "OTP Sent",
@@ -115,6 +114,20 @@ const Auth = () => {
       }
     }
     
+    setIsLoading(false);
+  };
+
+  const handleGoogleSignIn = async () => {
+    setIsLoading(true);
+    const { error } = await signInWithGoogle();
+    
+    if (error) {
+      toast({
+        title: "Google Sign In Failed",
+        description: error,
+        variant: "destructive",
+      });
+    }
     setIsLoading(false);
   };
 
@@ -156,7 +169,6 @@ const Auth = () => {
             fullName={formData.name}
             onBack={handleBackFromOTP}
             onSuccess={handleOTPSuccess}
-            demoOTP={demoOTP}
           />
         </div>
       </div>
@@ -329,7 +341,12 @@ const Auth = () => {
               </div>
             </div>
 
-            <Button variant="outline" className="w-full">
+            <Button 
+              variant="outline" 
+              className="w-full"
+              onClick={handleGoogleSignIn}
+              disabled={isLoading}
+            >
               <svg className="w-4 h-4 mr-2" viewBox="0 0 24 24">
                 <path
                   fill="currentColor"
