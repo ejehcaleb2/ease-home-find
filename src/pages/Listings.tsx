@@ -23,7 +23,7 @@ const Listings = () => {
   const [selectedAmenities, setSelectedAmenities] = useState<string[]>([]);
   const [favorites, setFavorites] = useState<number[]>([]);
 
-  // Sample listings data
+  // Comprehensive listings data with housing images
   const allListings = [
     {
       id: 1,
@@ -82,37 +82,478 @@ const Listings = () => {
       title: "Cozy Studio Apartment",
       location: "Surulere, Lagos",
       price: 120000,
-      image: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=400&h=300&fit=crop",
+      image: "https://images.unsplash.com/photo-1459767129954-1b1c1f9b9ace?w=400&h=300&fit=crop",
       type: "Studio",
       bedrooms: 1,
       rating: 4.3,
       amenities: ["Furnished", "Water", "Kitchen"],
       available: true,
       description: "Cozy studio perfect for young professionals."
+    },
+    // Adding 35 more listings with housing images
+    {
+      id: 6,
+      title: "Executive 1-Bedroom Flat",
+      location: "Lekki, Lagos",
+      price: 200000,
+      image: "https://images.unsplash.com/photo-1524230572899-a752b3835840?w=400&h=300&fit=crop",
+      type: "1-Bedroom",
+      bedrooms: 1,
+      rating: 4.7,
+      amenities: ["Generator", "Security", "Kitchen", "Water"],
+      available: true,
+      description: "Executive 1-bedroom in prime Lekki location."
+    },
+    {
+      id: 7,
+      title: "Family 3-Bedroom House",
+      location: "Magodo, Lagos",
+      price: 350000,
+      image: "https://images.unsplash.com/photo-1721322800607-8c38375eef04?w=400&h=300&fit=crop",
+      type: "3-Bedroom",
+      bedrooms: 3,
+      rating: 4.6,
+      amenities: ["Parking", "Garden", "Security", "Generator"],
+      available: true,
+      description: "Perfect family home with garden space."
+    },
+    {
+      id: 8,
+      title: "Affordable Self-Contained",
+      location: "Ketu, Lagos",
+      price: 90000,
+      image: "https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=400&h=300&fit=crop",
+      type: "Self-contained",
+      bedrooms: 1,
+      rating: 4.2,
+      amenities: ["Water", "Kitchen", "Security"],
+      available: true,
+      description: "Budget-friendly self-contained apartment."
+    },
+    {
+      id: 9,
+      title: "Modern 2-Bedroom Terrace",
+      location: "Ajah, Lagos",
+      price: 280000,
+      image: "https://images.unsplash.com/photo-1518005020951-eccb494ad742?w=400&h=300&fit=crop",
+      type: "2-Bedroom",
+      bedrooms: 2,
+      rating: 4.8,
+      amenities: ["Generator", "Parking", "Security", "Kitchen"],
+      available: true,
+      description: "Modern terrace house in developing Ajah."
+    },
+    {
+      id: 10,
+      title: "Luxury Studio",
+      location: "Ikoyi, Lagos",
+      price: 180000,
+      image: "https://images.unsplash.com/photo-1649972904349-6e44c42644a7?w=400&h=300&fit=crop",
+      type: "Studio",
+      bedrooms: 1,
+      rating: 4.9,
+      amenities: ["Furnished", "Pool", "Gym", "Security"],
+      available: true,
+      description: "Luxury studio with premium amenities."
+    },
+    {
+      id: 11,
+      title: "Comfortable Room Share",
+      location: "Ojota, Lagos",
+      price: 60000,
+      image: "https://images.unsplash.com/photo-1459767129954-1b1c1f9b9ace?w=400&h=300&fit=crop",
+      type: "Room",
+      bedrooms: 1,
+      rating: 4.1,
+      amenities: ["Shared Kitchen", "Water", "Transport"],
+      available: true,
+      description: "Affordable room sharing option."
+    },
+    {
+      id: 12,
+      title: "Executive 4-Bedroom Duplex",
+      location: "Banana Island, Lagos",
+      price: 800000,
+      image: "https://images.unsplash.com/photo-1524230572899-a752b3835840?w=400&h=300&fit=crop",
+      type: "4-Bedroom",
+      bedrooms: 4,
+      rating: 5.0,
+      amenities: ["Pool", "Garden", "Security", "Generator", "Parking"],
+      available: true,
+      description: "Ultra-luxury duplex in exclusive area."
+    },
+    {
+      id: 13,
+      title: "Student Hostel Room",
+      location: "Akoka, Lagos",
+      price: 70000,
+      image: "https://images.unsplash.com/photo-1721322800607-8c38375eef04?w=400&h=300&fit=crop",
+      type: "Room",
+      bedrooms: 1,
+      rating: 4.0,
+      amenities: ["Student Area", "Study Room", "Water"],
+      available: true,
+      description: "Clean hostel room near UNILAG."
+    },
+    {
+      id: 14,
+      title: "Serviced 1-Bedroom Apartment",
+      location: "Ikate, Lagos",
+      price: 220000,
+      image: "https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=400&h=300&fit=crop",
+      type: "1-Bedroom",
+      bedrooms: 1,
+      rating: 4.7,
+      amenities: ["Furnished", "Housekeeping", "Security", "Generator"],
+      available: true,
+      description: "Fully serviced apartment with housekeeping."
+    },
+    {
+      id: 15,
+      title: "Spacious 3-Bedroom Flat",
+      location: "Festac, Lagos",
+      price: 300000,
+      image: "https://images.unsplash.com/photo-1518005020951-eccb494ad742?w=400&h=300&fit=crop",
+      type: "3-Bedroom",
+      bedrooms: 3,
+      rating: 4.5,
+      amenities: ["Parking", "Playground", "Security", "Generator"],
+      available: true,
+      description: "Family-friendly flat in established estate."
+    },
+    // Continue with more listings...
+    {
+      id: 16,
+      title: "Mini Flat",
+      location: "Agege, Lagos",
+      price: 100000,
+      image: "https://images.unsplash.com/photo-1649972904349-6e44c42644a7?w=400&h=300&fit=crop",
+      type: "Mini Flat",
+      bedrooms: 1,
+      rating: 4.2,
+      amenities: ["Water", "Kitchen", "Security"],
+      available: true,
+      description: "Affordable mini flat for young professionals."
+    },
+    {
+      id: 17,
+      title: "2-Bedroom Bungalow",
+      location: "Ipaja, Lagos",
+      price: 180000,
+      image: "https://images.unsplash.com/photo-1459767129954-1b1c1f9b9ace?w=400&h=300&fit=crop",
+      type: "2-Bedroom",
+      bedrooms: 2,
+      rating: 4.4,
+      amenities: ["Garden", "Parking", "Water", "Security"],
+      available: true,
+      description: "Detached bungalow with private garden."
+    },
+    {
+      id: 18,
+      title: "Executive Self-Contained",
+      location: "Allen, Lagos",
+      price: 170000,
+      image: "https://images.unsplash.com/photo-1524230572899-a752b3835840?w=400&h=300&fit=crop",
+      type: "Self-contained",
+      bedrooms: 1,
+      rating: 4.6,
+      amenities: ["Generator", "Security", "Kitchen", "Parking"],
+      available: true,
+      description: "Executive self-contained in Allen Avenue."
+    },
+    {
+      id: 19,
+      title: "Luxury 2-Bedroom Penthouse",
+      location: "Victoria Island, Lagos",
+      price: 450000,
+      image: "https://images.unsplash.com/photo-1721322800607-8c38375eef04?w=400&h=300&fit=crop",
+      type: "2-Bedroom",
+      bedrooms: 2,
+      rating: 4.9,
+      amenities: ["Pool", "Gym", "Security", "Generator", "Ocean View"],
+      available: true,
+      description: "Penthouse with stunning ocean views."
+    },
+    {
+      id: 20,
+      title: "Student Lodge",
+      location: "Bariga, Lagos",
+      price: 65000,
+      image: "https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=400&h=300&fit=crop",
+      type: "Room",
+      bedrooms: 1,
+      rating: 4.0,
+      amenities: ["Student Area", "Study Hall", "Water", "Security"],
+      available: true,
+      description: "Purpose-built student accommodation."
+    },
+    // Continue adding more listings with unique details...
+    {
+      id: 21,
+      title: "4-Bedroom Terrace Duplex",
+      location: "Chevron, Lagos",
+      price: 600000,
+      image: "https://images.unsplash.com/photo-1518005020951-eccb494ad742?w=400&h=300&fit=crop",
+      type: "4-Bedroom",
+      bedrooms: 4,
+      rating: 4.8,
+      amenities: ["Garden", "Security", "Generator", "Parking", "BQ"],
+      available: true,
+      description: "Luxury terrace duplex with boys' quarters."
+    },
+    {
+      id: 22,
+      title: "Affordable 1-Bedroom",
+      location: "Mushin, Lagos",
+      price: 85000,
+      image: "https://images.unsplash.com/photo-1649972904349-6e44c42644a7?w=400&h=300&fit=crop",
+      type: "1-Bedroom",
+      bedrooms: 1,
+      rating: 4.1,
+      amenities: ["Water", "Kitchen", "Transport"],
+      available: true,
+      description: "Budget-friendly apartment with good transport links."
+    },
+    {
+      id: 23,
+      title: "Executive Studio",
+      location: "Oniru, Lagos",
+      price: 160000,
+      image: "https://images.unsplash.com/photo-1459767129954-1b1c1f9b9ace?w=400&h=300&fit=crop",
+      type: "Studio",
+      bedrooms: 1,
+      rating: 4.5,
+      amenities: ["Beach Access", "Security", "Generator", "Furnished"],
+      available: true,
+      description: "Studio apartment with beach access."
+    },
+    {
+      id: 24,
+      title: "Family 3-Bedroom Flat",
+      location: "Ogba, Lagos",
+      price: 190000,
+      image: "https://images.unsplash.com/photo-1524230572899-a752b3835840?w=400&h=300&fit=crop",
+      type: "3-Bedroom",
+      bedrooms: 3,
+      rating: 4.3,
+      amenities: ["School Nearby", "Security", "Parking", "Playground"],
+      available: true,
+      description: "Perfect for families with school-age children."
+    },
+    {
+      id: 25,
+      title: "Shared Apartment Room",
+      location: "Palmgrove, Lagos",
+      price: 75000,
+      image: "https://images.unsplash.com/photo-1721322800607-8c38375eef04?w=400&h=300&fit=crop",
+      type: "Room",
+      bedrooms: 1,
+      rating: 4.0,
+      amenities: ["Shared Kitchen", "Water", "Security", "Wi-Fi"],
+      available: true,
+      description: "Room in shared apartment with Wi-Fi."
+    },
+    {
+      id: 26,
+      title: "Luxury 1-Bedroom Condo",
+      location: "Eko Atlantic, Lagos",
+      price: 400000,
+      image: "https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=400&h=300&fit=crop",
+      type: "1-Bedroom",
+      bedrooms: 1,
+      rating: 5.0,
+      amenities: ["Ocean View", "Pool", "Gym", "Concierge", "Security"],
+      available: true,
+      description: "Ultra-modern condo in Eko Atlantic City."
+    },
+    {
+      id: 27,
+      title: "2-Bedroom Apartment",
+      location: "Berger, Lagos",
+      price: 140000,
+      image: "https://images.unsplash.com/photo-1518005020951-eccb494ad742?w=400&h=300&fit=crop",
+      type: "2-Bedroom",
+      bedrooms: 2,
+      rating: 4.2,
+      amenities: ["Transport Hub", "Market Nearby", "Water", "Security"],
+      available: true,
+      description: "Convenient location near transport hub."
+    },
+    {
+      id: 28,
+      title: "Executive 3-Bedroom Flat",
+      location: "Omole, Lagos",
+      price: 320000,
+      image: "https://images.unsplash.com/photo-1649972904349-6e44c42644a7?w=400&h=300&fit=crop",
+      type: "3-Bedroom",
+      bedrooms: 3,
+      rating: 4.7,
+      amenities: ["Estate", "Security", "Generator", "Parking", "Garden"],
+      available: true,
+      description: "Executive flat in gated estate."
+    },
+    {
+      id: 29,
+      title: "Self-Contained Studio",
+      location: "Maryland, Lagos",
+      price: 130000,
+      image: "https://images.unsplash.com/photo-1459767129954-1b1c1f9b9ace?w=400&h=300&fit=crop",
+      type: "Self-contained",
+      bedrooms: 1,
+      rating: 4.4,
+      amenities: ["Shopping Mall", "Water", "Security", "Kitchen"],
+      available: true,
+      description: "Near major shopping centers."
+    },
+    {
+      id: 30,
+      title: "Duplex 4-Bedroom",
+      location: "Gbagada, Lagos",
+      price: 550000,
+      image: "https://images.unsplash.com/photo-1524230572899-a752b3835840?w=400&h=300&fit=crop",
+      type: "4-Bedroom",
+      bedrooms: 4,
+      rating: 4.6,
+      amenities: ["Duplex", "Garden", "Security", "Generator", "Parking"],
+      available: true,
+      description: "Spacious duplex with private garden."
+    },
+    {
+      id: 31,
+      title: "Budget Room",
+      location: "Alaba, Lagos",
+      price: 50000,
+      image: "https://images.unsplash.com/photo-1721322800607-8c38375eef04?w=400&h=300&fit=crop",
+      type: "Room",
+      bedrooms: 1,
+      rating: 3.8,
+      amenities: ["Affordable", "Water", "Market Access"],
+      available: true,
+      description: "Most affordable option with basic amenities."
+    },
+    {
+      id: 32,
+      title: "Modern 2-Bedroom",
+      location: "Oregun, Lagos",
+      price: 210000,
+      image: "https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=400&h=300&fit=crop",
+      type: "2-Bedroom",
+      bedrooms: 2,
+      rating: 4.5,
+      amenities: ["Modern", "Security", "Generator", "Kitchen"],
+      available: true,
+      description: "Newly renovated modern apartment."
+    },
+    {
+      id: 33,
+      title: "Executive Mini Flat",
+      location: "Ogudu, Lagos",
+      price: 110000,
+      image: "https://images.unsplash.com/photo-1518005020951-eccb494ad742?w=400&h=300&fit=crop",
+      type: "Mini Flat",
+      bedrooms: 1,
+      rating: 4.3,
+      amenities: ["Executive", "Water", "Security", "Parking"],
+      available: true,
+      description: "Well-finished mini flat."
+    },
+    {
+      id: 34,
+      title: "Luxury 5-Bedroom Mansion",
+      location: "Lekki Phase 1, Lagos",
+      price: 1200000,
+      image: "https://images.unsplash.com/photo-1649972904349-6e44c42644a7?w=400&h=300&fit=crop",
+      type: "5-Bedroom",
+      bedrooms: 5,
+      rating: 5.0,
+      amenities: ["Pool", "Garden", "Security", "Generator", "Staff Quarters"],
+      available: true,
+      description: "Luxury mansion with all premium amenities."
+    },
+    {
+      id: 35,
+      title: "Cozy 1-Bedroom Flat",
+      location: "Egbeda, Lagos",
+      price: 95000,
+      image: "https://images.unsplash.com/photo-1459767129954-1b1c1f9b9ace?w=400&h=300&fit=crop",
+      type: "1-Bedroom",
+      bedrooms: 1,
+      rating: 4.2,
+      amenities: ["Cozy", "Water", "Kitchen", "Transport"],
+      available: true,
+      description: "Comfortable flat with good transport links."
+    },
+    {
+      id: 36,
+      title: "Student Apartment",
+      location: "Akoka, Lagos",
+      price: 80000,
+      image: "https://images.unsplash.com/photo-1524230572899-a752b3835840?w=400&h=300&fit=crop",
+      type: "Self-contained",
+      bedrooms: 1,
+      rating: 4.1,
+      amenities: ["Student Area", "Study Space", "Water", "Security"],
+      available: true,
+      description: "Perfect for university students."
+    },
+    {
+      id: 37,
+      title: "Premium 3-Bedroom Terrace",
+      location: "Ikota, Lagos",
+      price: 380000,
+      image: "https://images.unsplash.com/photo-1721322800607-8c38375eef04?w=400&h=300&fit=crop",
+      type: "3-Bedroom",
+      bedrooms: 3,
+      rating: 4.8,
+      amenities: ["Terrace", "Garden", "Security", "Generator", "Modern"],
+      available: true,
+      description: "Premium terrace house in new development."
+    },
+    {
+      id: 38,
+      title: "Shared 2-Bedroom Flat",
+      location: "Shomolu, Lagos",
+      price: 65000,
+      image: "https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=400&h=300&fit=crop",
+      type: "Room",
+      bedrooms: 1,
+      rating: 3.9,
+      amenities: ["Shared", "Water", "Kitchen Access", "Transport"],
+      available: true,
+      description: "Room in shared 2-bedroom flat."
+    },
+    {
+      id: 39,
+      title: "Executive Duplex",
+      location: "Anthony, Lagos",
+      price: 290000,
+      image: "https://images.unsplash.com/photo-1518005020951-eccb494ad742?w=400&h=300&fit=crop",
+      type: "3-Bedroom",
+      bedrooms: 3,
+      rating: 4.5,
+      amenities: ["Duplex", "Security", "Generator", "Parking"],
+      available: true,
+      description: "Executive duplex in prime Anthony area."
+    },
+    {
+      id: 40,
+      title: "Waterfront Apartment",
+      location: "Ikoyi, Lagos",
+      price: 700000,
+      image: "https://images.unsplash.com/photo-1649972904349-6e44c42644a7?w=400&h=300&fit=crop",
+      type: "2-Bedroom",
+      bedrooms: 2,
+      rating: 5.0,
+      amenities: ["Waterfront", "Pool", "Gym", "Security", "Concierge"],
+      available: true,
+      description: "Luxury waterfront apartment with premium amenities."
     }
   ];
 
-  // Add more listings to reach 25+ total
-  const additionalListings = Array.from({ length: 20 }, (_, i) => ({
-    id: i + 6,
-    title: `Quality ${Math.random() > 0.5 ? 'Apartment' : 'Room'} ${i + 1}`,
-    location: `${['Lekki', 'Ikoyi', 'Ajah', 'Magodo', 'Ojota', 'Ketu'][Math.floor(Math.random() * 6)]}, Lagos`,
-    price: Math.floor(Math.random() * 400000) + 100000,
-    image: `https://images.unsplash.com/photo-${['1721322800607-8c38375eef04', '1487958449943-2429e8be8625', '1518005020951-eccb494ad742'][Math.floor(Math.random() * 3)]}?w=400&h=300&fit=crop`,
-    type: ['Room', 'Self-contained', '1-Bedroom', '2-Bedroom'][Math.floor(Math.random() * 4)],
-    bedrooms: Math.floor(Math.random() * 3) + 1,
-    rating: Math.random() * 1.5 + 3.5,
-    amenities: ['Water', 'Security', 'Kitchen', 'Generator'].slice(0, Math.floor(Math.random() * 4) + 1),
-    available: Math.random() > 0.1,
-    description: "Well-maintained property in a good neighborhood."
-  }));
-
-  const listings = [...allListings, ...additionalListings];
-
-  const amenityOptions = ["Water", "Security", "Kitchen", "Generator", "Parking", "Furnished", "Student Area", "Transport"];
+  const amenityOptions = ["Water", "Security", "Kitchen", "Generator", "Parking", "Furnished", "Student Area", "Transport", "Pool", "Gym", "Garden"];
 
   const filteredListings = useMemo(() => {
-    return listings.filter(listing => {
+    return allListings.filter(listing => {
       const matchesSearch = listing.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
                            listing.location.toLowerCase().includes(searchQuery.toLowerCase());
       const matchesLocation = !location || listing.location.toLowerCase().includes(location.toLowerCase());
@@ -135,7 +576,7 @@ const Listings = () => {
           return b.id - a.id; // newest first
       }
     });
-  }, [searchQuery, location, priceRange, homeType, bedrooms, selectedAmenities, sortBy, listings]);
+  }, [searchQuery, location, priceRange, homeType, bedrooms, selectedAmenities, sortBy]);
 
   const toggleFavorite = (listingId: number) => {
     setFavorites(prev => 
@@ -186,13 +627,16 @@ const Listings = () => {
                 <SelectValue placeholder="Home type" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">All Types</SelectItem>
+                <SelectItem value="all">All Types</SelectItem>
                 <SelectItem value="Room">Room</SelectItem>
                 <SelectItem value="Self-contained">Self-contained</SelectItem>
                 <SelectItem value="1-Bedroom">1-Bedroom</SelectItem>
                 <SelectItem value="2-Bedroom">2-Bedroom</SelectItem>
                 <SelectItem value="3-Bedroom">3-Bedroom</SelectItem>
+                <SelectItem value="4-Bedroom">4-Bedroom</SelectItem>
+                <SelectItem value="5-Bedroom">5-Bedroom</SelectItem>
                 <SelectItem value="Studio">Studio</SelectItem>
+                <SelectItem value="Mini Flat">Mini Flat</SelectItem>
               </SelectContent>
             </Select>
             
@@ -247,7 +691,7 @@ const Listings = () => {
                         <SelectValue placeholder="Any" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="">Any</SelectItem>
+                        <SelectItem value="any">Any</SelectItem>
                         <SelectItem value="1">1 Bedroom</SelectItem>
                         <SelectItem value="2">2 Bedrooms</SelectItem>
                         <SelectItem value="3">3 Bedrooms</SelectItem>
@@ -280,7 +724,7 @@ const Listings = () => {
         {/* Results Count */}
         <div className="mb-6">
           <p className="text-gray-600">
-            Showing {filteredListings.length} of {listings.length} listings
+            Showing {filteredListings.length} of {allListings.length} listings
           </p>
         </div>
 

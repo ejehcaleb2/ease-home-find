@@ -1,71 +1,101 @@
-
 import { useState } from "react";
-import { Search, Home, Shield, Clock, MapPin, Users, Star, ArrowRight, Phone } from "lucide-react";
+import { Search, MapPin, Home, Users, Shield, Star, CheckCircle, ArrowRight, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Index = () => {
+  const navigate = useNavigate();
   const [searchLocation, setSearchLocation] = useState("");
-  const [searchType, setSearchType] = useState("");
-  const [searchPrice, setSearchPrice] = useState("");
+  const [homeType, setHomeType] = useState("");
+  const [priceRange, setPriceRange] = useState("");
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    const params = new URLSearchParams();
+    if (searchLocation) params.set('location', searchLocation);
+    if (homeType) params.set('type', homeType);
+    if (priceRange) params.set('price', priceRange);
+    navigate(`/listings?${params.toString()}`);
+  };
 
   const featuredListings = [
     {
       id: 1,
       title: "Modern Self-Contained Apartment",
       location: "Ikeja, Lagos",
-      price: "₦150,000",
+      price: 150000,
       image: "https://images.unsplash.com/photo-1721322800607-8c38375eef04?w=400&h=300&fit=crop",
       type: "Self-contained",
       bedrooms: 1,
-      tags: ["Furnished", "Water", "Security"]
+      rating: 4.8
     },
     {
       id: 2,
       title: "Spacious 2-Bedroom Flat",
-      location: "Gbagada, Lagos",
-      price: "₦250,000",
+      location: "Gbagada, Lagos", 
+      price: 250000,
       image: "https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=400&h=300&fit=crop",
       type: "2-Bedroom",
       bedrooms: 2,
-      tags: ["Generator", "Parking", "Kitchen"]
+      rating: 4.9
     },
     {
-      id: 3,
-      title: "Student-Friendly Room",
-      location: "Yaba, Lagos",
-      price: "₦80,000",
-      image: "https://images.unsplash.com/photo-1518005020951-eccb494ad742?w=400&h=300&fit=crop",
-      type: "Room",
-      bedrooms: 1,
-      tags: ["Student Area", "Affordable", "Transport"]
+      id: 4,
+      title: "Luxury 3-Bedroom Duplex",
+      location: "Victoria Island, Lagos",
+      price: 500000,
+      image: "https://images.unsplash.com/photo-1649972904349-6e44c42644a7?w=400&h=300&fit=crop",
+      type: "3-Bedroom", 
+      bedrooms: 3,
+      rating: 5.0
+    }
+  ];
+
+  const benefits = [
+    {
+      icon: <Shield className="h-8 w-8 text-blue-600" />,
+      title: "No Agent Fees",
+      description: "Connect directly with verified landlords. Zero middleman charges or hidden fees."
+    },
+    {
+      icon: <CheckCircle className="h-8 w-8 text-green-600" />,
+      title: "Verified Properties",
+      description: "Every listing is thoroughly verified for authenticity and quality before going live."
+    },
+    {
+      icon: <Users className="h-8 w-8 text-purple-600" />,
+      title: "Direct Communication",
+      description: "Chat, call, or WhatsApp property owners directly without any intermediaries."
     }
   ];
 
   const testimonials = [
     {
-      name: "Adebayo Oluwaseun",
+      name: "Adunni Bakare",
       location: "Lagos",
-      text: "Found my perfect apartment in just 3 days! No agent fees, no stress. HomeEase is a game-changer.",
-      rating: 5
+      text: "I found my perfect apartment in just 3 days! No agent stress, no extra fees. HomeEase made everything so simple.",
+      rating: 5,
+      image: "https://images.unsplash.com/photo-1494790108755-2616b612b77c?w=100&h=100&fit=crop&crop=face"
     },
     {
-      name: "Chioma Nwachukwu",
+      name: "Michael Okonkwo", 
       location: "Abuja",
-      text: "Finally, a platform that actually verifies listings. Saved me from so many fake apartments.",
-      rating: 5
+      text: "As a student, saving on agent fees was crucial. HomeEase helped me find affordable accommodation near my university.",
+      rating: 5,
+      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face"
     },
     {
-      name: "Ibrahim Musa",
-      location: "Port Harcourt",
-      text: "The best part? Direct contact with landlords. No middleman charging extra fees!",
-      rating: 5
+      name: "Fatima Ahmed",
+      location: "Port Harcourt", 
+      text: "The verification process gave me confidence. I knew the property and landlord were legitimate before viewing.",
+      rating: 5,
+      image: "https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?w=100&h=100&fit=crop&crop=face"
     }
   ];
 
@@ -73,34 +103,45 @@ const Index = () => {
     <div className="min-h-screen bg-background">
       <Header />
       
-      {/* Hero Section */}
-      <section className="bg-gradient-to-br from-blue-50 to-green-50 py-20 px-4">
-        <div className="max-w-6xl mx-auto text-center">
-          <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6 animate-fade-in">
-            Affordable homes. <span className="text-blue-600">Zero stress.</span>
+      {/* Hero Section with Background Image */}
+      <section className="relative bg-gradient-to-r from-blue-900/90 to-blue-800/90 text-white py-20 overflow-hidden">
+        {/* Background Image */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{
+            backgroundImage: "url('https://images.unsplash.com/photo-1721322800607-8c38375eef04?w=1920&h=1080&fit=crop')",
+          }}
+        />
+        <div className="absolute inset-0 bg-blue-900/70" />
+        
+        {/* Content */}
+        <div className="relative max-w-6xl mx-auto px-4 text-center">
+          <h1 className="text-4xl md:text-6xl font-bold mb-6 animate-fade-in">
+            Affordable homes. <span className="text-yellow-400">Zero stress.</span>
           </h1>
-          <p className="text-xl text-gray-600 mb-12 max-w-3xl mx-auto animate-fade-in">
+          <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto animate-fade-in">
             HomeEase helps you find real, verified rental homes in Nigeria—without agent fees.
           </p>
           
-          {/* Search Bar */}
-          <div className="bg-white rounded-2xl shadow-xl p-6 max-w-4xl mx-auto animate-scale-in">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          {/* Search Form */}
+          <form onSubmit={handleSearch} className="bg-white rounded-lg p-6 shadow-2xl max-w-4xl mx-auto animate-scale-in">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
               <div className="relative">
                 <MapPin className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
                 <Input
-                  placeholder="Enter location"
+                  placeholder="Enter location (e.g., Lagos, Abuja)"
                   value={searchLocation}
                   onChange={(e) => setSearchLocation(e.target.value)}
-                  className="pl-10 h-12"
+                  className="pl-10 text-gray-900"
                 />
               </div>
               
-              <Select value={searchType} onValueChange={setSearchType}>
-                <SelectTrigger className="h-12">
+              <Select value={homeType} onValueChange={setHomeType}>
+                <SelectTrigger className="text-gray-900">
                   <SelectValue placeholder="Home type" />
                 </SelectTrigger>
                 <SelectContent>
+                  <SelectItem value="any">Any Type</SelectItem>
                   <SelectItem value="room">Room</SelectItem>
                   <SelectItem value="self-contained">Self-contained</SelectItem>
                   <SelectItem value="1-bedroom">1-Bedroom</SelectItem>
@@ -109,70 +150,124 @@ const Index = () => {
                 </SelectContent>
               </Select>
               
-              <Select value={searchPrice} onValueChange={setSearchPrice}>
-                <SelectTrigger className="h-12">
+              <Select value={priceRange} onValueChange={setPriceRange}>
+                <SelectTrigger className="text-gray-900">
                   <SelectValue placeholder="Price range" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="under-100k">Under ₦100k</SelectItem>
-                  <SelectItem value="100k-200k">₦100k - ₦200k</SelectItem>
-                  <SelectItem value="200k-300k">₦200k - ₦300k</SelectItem>
-                  <SelectItem value="300k-500k">₦300k - ₦500k</SelectItem>
-                  <SelectItem value="above-500k">Above ₦500k</SelectItem>
+                  <SelectItem value="any">Any Price</SelectItem>
+                  <SelectItem value="0-100000">Under ₦100k</SelectItem>
+                  <SelectItem value="100000-200000">₦100k - ₦200k</SelectItem>
+                  <SelectItem value="200000-500000">₦200k - ₦500k</SelectItem>
+                  <SelectItem value="500000-1000000">₦500k - ₦1M</SelectItem>
+                  <SelectItem value="1000000+">Above ₦1M</SelectItem>
                 </SelectContent>
               </Select>
               
-              <Link to="/listings">
-                <Button size="lg" className="w-full h-12 bg-blue-600 hover:bg-blue-700">
-                  <Search className="mr-2 h-5 w-5" />
-                  Search Homes
-                </Button>
-              </Link>
+              <Button type="submit" className="bg-blue-600 hover:bg-blue-700 w-full">
+                <Search className="h-5 w-5 mr-2" />
+                Search Homes
+              </Button>
+            </div>
+            <p className="text-gray-600 text-sm">
+              Over 5,000 verified properties • No agent fees • Direct landlord contact
+            </p>
+          </form>
+        </div>
+      </section>
+
+      {/* How It Works */}
+      <section className="py-16 bg-gray-50">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">How It Works</h2>
+            <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+              Finding your perfect home is easier than ever with our simple 3-step process
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="text-center group">
+              <div className="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-blue-200 transition-colors">
+                <Search className="h-10 w-10 text-blue-600" />
+              </div>
+              <h3 className="text-xl font-semibold mb-4">1. Search & Filter</h3>
+              <p className="text-gray-600">
+                Use our advanced search to find properties that match your exact needs, budget, and location preferences.
+              </p>
+            </div>
+            
+            <div className="text-center group">
+              <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-green-200 transition-colors">
+                <CheckCircle className="h-10 w-10 text-green-600" />
+              </div>
+              <h3 className="text-xl font-semibold mb-4">2. View & Verify</h3>
+              <p className="text-gray-600">
+                Browse verified listings with real photos, detailed descriptions, and direct landlord contact information.
+              </p>
+            </div>
+            
+            <div className="text-center group">
+              <div className="w-20 h-20 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-purple-200 transition-colors">
+                <Home className="h-10 w-10 text-purple-600" />
+              </div>
+              <h3 className="text-xl font-semibold mb-4">3. Connect & Move In</h3>
+              <p className="text-gray-600">
+                Contact landlords directly, schedule viewings, and secure your new home without any agent fees.
+              </p>
             </div>
           </div>
         </div>
       </section>
 
       {/* Featured Listings */}
-      <section className="py-20 px-4">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Featured Listings</h2>
-            <p className="text-gray-600">Discover verified homes from trusted landlords</p>
+      <section className="py-16">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="flex items-center justify-between mb-8">
+            <div>
+              <h2 className="text-3xl font-bold mb-2">Featured Listings</h2>
+              <p className="text-gray-600">Discover quality homes from verified landlords</p>
+            </div>
+            <Link to="/listings">
+              <Button variant="outline">
+                View All Listings
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+            </Link>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {featuredListings.map((listing) => (
               <Card key={listing.id} className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
-                <div className="relative">
+                <div className="relative overflow-hidden">
                   <img
                     src={listing.image}
                     alt={listing.title}
-                    className="w-full h-48 object-cover rounded-t-lg group-hover:scale-105 transition-transform duration-300"
+                    className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
                   />
-                  <Badge className="absolute top-4 left-4 bg-green-500 hover:bg-green-600">
-                    Available
-                  </Badge>
+                  <Badge className="absolute top-4 left-4 bg-green-500">Available</Badge>
                 </div>
                 <CardContent className="p-6">
-                  <h3 className="text-xl font-semibold mb-2">{listing.title}</h3>
+                  <div className="flex items-center justify-between mb-2">
+                    <h3 className="text-lg font-semibold">{listing.title}</h3>
+                    <div className="flex items-center space-x-1">
+                      <Star className="h-4 w-4 text-yellow-400 fill-current" />
+                      <span className="text-sm text-gray-600">{listing.rating}</span>
+                    </div>
+                  </div>
                   <p className="text-gray-600 mb-3 flex items-center">
                     <MapPin className="h-4 w-4 mr-1" />
                     {listing.location}
                   </p>
                   <div className="flex items-center justify-between mb-4">
-                    <span className="text-2xl font-bold text-blue-600">{listing.price}<span className="text-sm text-gray-500">/year</span></span>
+                    <span className="text-2xl font-bold text-blue-600">
+                      ₦{listing.price.toLocaleString()}
+                      <span className="text-sm text-gray-500">/year</span>
+                    </span>
                     <span className="text-gray-500">{listing.bedrooms} bed</span>
                   </div>
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {listing.tags.map((tag) => (
-                      <Badge key={tag} variant="secondary" className="text-xs">
-                        {tag}
-                      </Badge>
-                    ))}
-                  </div>
                   <Link to={`/listing/${listing.id}`}>
-                    <Button className="w-full" variant="outline">
+                    <Button className="w-full">
                       View Details
                       <ArrowRight className="ml-2 h-4 w-4" />
                     </Button>
@@ -181,119 +276,61 @@ const Index = () => {
               </Card>
             ))}
           </div>
-          
-          <div className="text-center mt-12">
-            <Link to="/listings">
-              <Button size="lg" className="bg-blue-600 hover:bg-blue-700">
-                View All Listings
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* How It Works */}
-      <section className="py-20 px-4 bg-gray-50">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">How It Works</h2>
-            <p className="text-gray-600">Finding your perfect home in 3 simple steps</p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="text-center">
-              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                <Search className="h-8 w-8 text-blue-600" />
-              </div>
-              <h3 className="text-xl font-semibold mb-4">1. Search & Filter</h3>
-              <p className="text-gray-600">Use our advanced filters to find homes that match your needs and budget perfectly.</p>
-            </div>
-            
-            <div className="text-center">
-              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                <Shield className="h-8 w-8 text-green-600" />
-              </div>
-              <h3 className="text-xl font-semibold mb-4">2. View Verified Listings</h3>
-              <p className="text-gray-600">Browse only verified properties with real photos and accurate information.</p>
-            </div>
-            
-            <div className="text-center">
-              <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                <Home className="h-8 w-8 text-purple-600" />
-              </div>
-              <h3 className="text-xl font-semibold mb-4">3. Move In</h3>
-              <p className="text-gray-600">Contact landlords directly, schedule viewings, and move into your dream home.</p>
-            </div>
-          </div>
         </div>
       </section>
 
       {/* Benefits */}
-      <section className="py-20 px-4">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Why Choose HomeEase?</h2>
-            <p className="text-gray-600">Experience the difference of a truly tenant-focused platform</p>
+      <section className="py-16 bg-blue-50">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Why Choose HomeEase?</h2>
+            <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+              We're revolutionizing the housing market in Nigeria with transparency, affordability, and trust
+            </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="text-center">
-              <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-                <Shield className="h-6 w-6 text-blue-600" />
-              </div>
-              <h3 className="font-semibold mb-2">No Agent Fees</h3>
-              <p className="text-sm text-gray-600">Connect directly with landlords and save on commission fees</p>
-            </div>
-            
-            <div className="text-center">
-              <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-                <Clock className="h-6 w-6 text-green-600" />
-              </div>
-              <h3 className="font-semibold mb-2">Verified Listings</h3>
-              <p className="text-sm text-gray-600">All properties are verified for authenticity and accuracy</p>
-            </div>
-            
-            <div className="text-center">
-              <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-                <Users className="h-6 w-6 text-purple-600" />
-              </div>
-              <h3 className="font-semibold mb-2">Direct Contact</h3>
-              <p className="text-sm text-gray-600">Communicate directly with property owners</p>
-            </div>
-            
-            <div className="text-center">
-              <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-                <Home className="h-6 w-6 text-orange-600" />
-              </div>
-              <h3 className="font-semibold mb-2">Quality Homes</h3>
-              <p className="text-sm text-gray-600">Curated selection of quality, affordable properties</p>
-            </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {benefits.map((benefit, index) => (
+              <Card key={index} className="text-center p-8 hover:shadow-lg transition-shadow">
+                <div className="flex justify-center mb-6">{benefit.icon}</div>
+                <h3 className="text-xl font-semibold mb-4">{benefit.title}</h3>
+                <p className="text-gray-600">{benefit.description}</p>
+              </Card>
+            ))}
           </div>
         </div>
       </section>
 
       {/* Testimonials */}
-      <section className="py-20 px-4 bg-blue-50">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">What Our Tenants Say</h2>
-            <p className="text-gray-600">Real stories from people who found their perfect homes</p>
+      <section className="py-16">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">What Our Users Say</h2>
+            <p className="text-gray-600 text-lg">
+              Join thousands of satisfied tenants who found their perfect homes through HomeEase
+            </p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {testimonials.map((testimonial, index) => (
-              <Card key={index} className="bg-white">
-                <CardContent className="p-6">
-                  <div className="flex mb-4">
+              <Card key={index} className="p-6 hover:shadow-lg transition-shadow">
+                <CardContent className="p-0">
+                  <div className="flex items-center mb-4">
                     {[...Array(testimonial.rating)].map((_, i) => (
                       <Star key={i} className="h-5 w-5 text-yellow-400 fill-current" />
                     ))}
                   </div>
-                  <p className="text-gray-600 mb-4">"{testimonial.text}"</p>
-                  <div className="border-t pt-4">
-                    <p className="font-semibold">{testimonial.name}</p>
-                    <p className="text-sm text-gray-500">{testimonial.location}</p>
+                  <p className="text-gray-600 mb-6">"{testimonial.text}"</p>
+                  <div className="flex items-center">
+                    <img
+                      src={testimonial.image}
+                      alt={testimonial.name}
+                      className="w-12 h-12 rounded-full mr-4 object-cover"
+                    />
+                    <div>
+                      <div className="font-semibold">{testimonial.name}</div>
+                      <div className="text-gray-500 text-sm">{testimonial.location}</div>
+                    </div>
                   </div>
                 </CardContent>
               </Card>
@@ -303,38 +340,47 @@ const Index = () => {
       </section>
 
       {/* Stats */}
-      <section className="py-20 px-4 bg-gray-900 text-white">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+      <section className="py-16 bg-gray-900 text-white">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             <div>
-              <div className="text-4xl font-bold text-blue-400 mb-2">500+</div>
-              <p className="text-gray-300">Verified Homes Listed</p>
+              <div className="text-4xl font-bold text-blue-400 mb-2">10,000+</div>
+              <div className="text-gray-300">Happy Tenants</div>
             </div>
             <div>
-              <div className="text-4xl font-bold text-green-400 mb-2">1,200+</div>
-              <p className="text-gray-300">Happy Tenants</p>
+              <div className="text-4xl font-bold text-green-400 mb-2">5,000+</div>
+              <div className="text-gray-300">Verified Properties</div>
             </div>
             <div>
-              <div className="text-4xl font-bold text-purple-400 mb-2">50+</div>
-              <p className="text-gray-300">Cities Covered</p>
+              <div className="text-4xl font-bold text-yellow-400 mb-2">50+</div>
+              <div className="text-gray-300">Cities Covered</div>
+            </div>
+            <div>
+              <div className="text-4xl font-bold text-purple-400 mb-2">₦2B+</div>
+              <div className="text-gray-300">Saved in Agent Fees</div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-20 px-4 bg-blue-600 text-white">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl font-bold mb-4">Ready to Find Your Perfect Home?</h2>
-          <p className="text-xl mb-8 opacity-90">Join thousands of Nigerians who have found their dream homes with HomeEase</p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+      {/* CTA */}
+      <section className="py-16 bg-blue-600 text-white">
+        <div className="max-w-4xl mx-auto px-4 text-center">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            Ready to Find Your Perfect Home?
+          </h2>
+          <p className="text-xl mb-8">
+            Join thousands of Nigerians who have found quality, affordable homes through HomeEase
+          </p>
+          <div className="space-y-4 md:space-y-0 md:space-x-4 md:flex md:justify-center">
             <Link to="/listings">
-              <Button size="lg" variant="secondary" className="text-blue-600">
+              <Button size="lg" className="bg-white text-blue-600 hover:bg-gray-100 w-full md:w-auto">
                 Browse Listings
+                <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </Link>
             <Link to="/auth">
-              <Button size="lg" variant="outline" className="text-white border-white hover:bg-white hover:text-blue-600">
+              <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-blue-600 w-full md:w-auto">
                 Create Account
               </Button>
             </Link>
@@ -343,14 +389,16 @@ const Index = () => {
       </section>
 
       {/* WhatsApp Float Button */}
-      <a
-        href="https://wa.me/2341234567890"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="fixed bottom-6 right-6 bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-lg transition-all duration-300 hover:scale-110 z-50"
-      >
-        <Phone className="h-6 w-6" />
-      </a>
+      <div className="fixed bottom-6 right-6 z-50">
+        <a
+          href="https://wa.me/2348031234567"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-lg transition-all duration-300 hover:scale-110"
+        >
+          <Phone className="h-6 w-6" />
+        </a>
+      </div>
 
       <Footer />
     </div>
