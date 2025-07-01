@@ -1,20 +1,23 @@
 
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Heart, Search, User, Settings, LogOut, MessageCircle, History } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { useAuth } from "@/hooks/useAuth";
 
 const Dashboard = () => {
-  const [user] = useState({
-    name: "Caleb",
-    email: "caleb@example.com",
-    location: "Lagos, Nigeria",
-    phone: "+234 123 456 7890"
-  });
+  const { user, userProfile, signOut, loading } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!loading && !user) {
+      navigate('/auth');
+    }
+  }, [user, loading, navigate]);
 
   const [savedListings] = useState([
     {
@@ -43,6 +46,25 @@ const Dashboard = () => {
     { query: "Student accommodation Yaba", date: "3 days ago" },
   ]);
 
+  const handleSignOut = async () => {
+    await signOut();
+    navigate('/auth');
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-lg">Loading...</div>
+      </div>
+    );
+  }
+
+  if (!user) {
+    return null;
+  }
+
+  const userName = userProfile?.full_name || user?.user_metadata?.full_name || 'User';
+
   return (
     <div className="min-h-screen bg-background">
       <Header />
@@ -51,7 +73,7 @@ const Dashboard = () => {
         {/* Welcome Section */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            Welcome back, {user.name}! 👋
+            Welcome back, {userName}! 👋
           </h1>
           <p className="text-gray-600">
             Manage your saved listings, search history, and profile settings.
@@ -173,19 +195,19 @@ const Dashboard = () => {
               <CardContent className="space-y-3">
                 <div className="text-center">
                   <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-3">
-                    <span className="text-white text-xl font-bold">{user.name.charAt(0)}</span>
+                    <span className="text-white text-xl font-bold">{userName.charAt(0).toUpperCase()}</span>
                   </div>
-                  <h3 className="font-semibold">{user.name}</h3>
-                  <p className="text-sm text-gray-600">{user.email}</p>
+                  <h3 className="font-semibold">{userName}</h3>
+                  <p className="text-sm text-gray-600">{user?.email}</p>
                 </div>
                 <div className="space-y-2 text-sm">
                   <div>
                     <span className="font-medium">Location:</span>
-                    <span className="ml-2 text-gray-600">{user.location}</span>
+                    <span className="ml-2 text-gray-600">{userProfile?.location || 'Not set'}</span>
                   </div>
                   <div>
                     <span className="font-medium">Phone:</span>
-                    <span className="ml-2 text-gray-600">{user.phone}</span>
+                    <span className="ml-2 text-gray-600">{userProfile?.phone || 'Not set'}</span>
                   </div>
                 </div>
                 <Button variant="outline" className="w-full">
@@ -211,12 +233,14 @@ const Dashboard = () => {
                   <MessageCircle className="h-4 w-4 mr-2" />
                   Contact Support
                 </Button>
-                <Link to="/auth">
-                  <Button variant="outline" className="w-full justify-start text-red-600 hover:text-red-700">
-                    <LogOut className="h-4 w-4 mr-2" />
-                    Logout
-                  </Button>
-                </Link>
+                <Button 
+                  variant="outline" 
+                  className="w-full justify-start text-red-600 hover:text-red-700"
+                  onClick={handleSignOut}
+                >
+                  <LogOut className="h-4 w-4 mr-2" />
+                  Logout
+                </Button>
               </CardContent>
             </Card>
           </div>

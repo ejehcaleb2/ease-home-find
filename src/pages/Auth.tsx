@@ -8,14 +8,20 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/hooks/useAuth";
+import OTPVerification from "@/components/OTPVerification";
 
 const Auth = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [showOTPVerification, setShowOTPVerification] = useState(false);
+  const [demoOTP, setDemoOTP] = useState("");
+  
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { signIn, sendOTP } = useAuth();
 
   const [formData, setFormData] = useState({
     name: "",
@@ -35,50 +41,91 @@ const Auth = () => {
     e.preventDefault();
     setIsLoading(true);
 
-    // Simulate API call
-    setTimeout(() => {
-      if (isLogin) {
-        // Login logic
-        if (formData.email && formData.password) {
-          toast({
-            title: "Login Successful!",
-            description: "Welcome back to HomeEase",
-          });
-          navigate("/dashboard");
-        } else {
-          toast({
-            title: "Error",
-            description: "Please fill in all fields",
-            variant: "destructive",
-          });
-        }
-      } else {
-        // Register logic
-        if (formData.name && formData.email && formData.password && formData.confirmPassword) {
-          if (formData.password === formData.confirmPassword) {
-            toast({
-              title: "Account Created Successfully!",
-              description: "Please login to continue",
-            });
-            setIsLogin(true);
-            setFormData({ name: "", email: "", password: "", confirmPassword: "" });
-          } else {
-            toast({
-              title: "Error",
-              description: "Passwords do not match",
-              variant: "destructive",
-            });
-          }
-        } else {
-          toast({
-            title: "Error",
-            description: "Please fill in all fields",
-            variant: "destructive",
-          });
-        }
+    if (isLogin) {
+      // Login logic
+      if (!formData.email || !formData.password) {
+        toast({
+          title: "Error",
+          description: "Please fill in all fields",
+          variant: "destructive",
+        });
+        setIsLoading(false);
+        return;
       }
-      setIsLoading(false);
-    }, 1000);
+
+      const { error } = await signIn(formData.email, formData.password);
+      
+      if (error) {
+        toast({
+          title: "Login Failed",
+          description: error,
+          variant: "destructive",
+        });
+      } else {
+        navigate("/dashboard");
+      }
+    } else {
+      // Sign up logic with OTP
+      if (!formData.name || !formData.email || !formData.password || !formData.confirmPassword) {
+        toast({
+          title: "Error",
+          description: "Please fill in all fields",
+          variant: "destructive",
+        });
+        setIsLoading(false);
+        return;
+      }
+
+      if (formData.password !== formData.confirmPassword) {
+        toast({
+          title: "Error",
+          description: "Passwords do not match",
+          variant: "destructive",
+        });
+        setIsLoading(false);
+        return;
+      }
+
+      if (formData.password.length < 6) {
+        toast({
+          title: "Error",
+          description: "Password must be at least 6 characters",
+          variant: "destructive",
+        });
+        setIsLoading(false);
+        return;
+      }
+
+      // Send OTP
+      const { error, otp } = await sendOTP(formData.email);
+      
+      if (error) {
+        toast({
+          title: "Error",
+          description: error,
+          variant: "destructive",
+        });
+      } else {
+        setDemoOTP(otp || "");
+        setShowOTPVerification(true);
+        toast({
+          title: "OTP Sent",
+          description: "Please check your email for the verification code",
+        });
+      }
+    }
+    
+    setIsLoading(false);
+  };
+
+  const handleOTPSuccess = () => {
+    setShowOTPVerification(false);
+    setIsLogin(true);
+    setFormData({ name: "", email: "", password: "", confirmPassword: "" });
+  };
+
+  const handleBackFromOTP = () => {
+    setShowOTPVerification(false);
   };
 
   const togglePasswordVisibility = () => {
@@ -88,6 +135,33 @@ const Auth = () => {
   const toggleConfirmPasswordVisibility = () => {
     setShowConfirmPassword(!showConfirmPassword);
   };
+
+  if (showOTPVerification) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
+        <div className="w-full max-w-md">
+          <div className="text-center mb-8">
+            <Link to="/" className="inline-flex items-center space-x-2">
+              <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
+                <Home className="h-6 w-6 text-white" />
+              </div>
+              <span className="text-2xl font-bold text-gray-900">HomeEase</span>
+            </Link>
+            <p className="text-gray-600 mt-2">Find your perfect home</p>
+          </div>
+
+          <OTPVerification
+            email={formData.email}
+            password={formData.password}
+            fullName={formData.name}
+            onBack={handleBackFromOTP}
+            onSuccess={handleOTPSuccess}
+            demoOTP={demoOTP}
+          />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
@@ -240,7 +314,7 @@ const Auth = () => {
                   ? "Please wait..."
                   : isLogin
                   ? "Sign In"
-                  : "Create Account"}
+                  : "Send Verification Code"}
               </Button>
             </form>
 
