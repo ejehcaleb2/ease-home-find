@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Eye, EyeOff, User, Mail, Lock, Home } from "lucide-react";
@@ -21,7 +20,7 @@ const Auth = () => {
   
   const navigate = useNavigate();
   const { toast } = useToast();
-  const { signIn, sendOTP } = useAuth();
+  const { signIn, sendOTP, signInWithGoogle } = useAuth();
 
   const [formData, setFormData] = useState({
     name: "",
