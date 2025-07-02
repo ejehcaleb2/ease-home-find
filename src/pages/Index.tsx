@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Search, Heart, Shield, MessageCircle, Home, MapPin, Star } from "lucide-react";
+import { Search, Heart, Shield, MessageCircle, Home, MapPin, Star, DollarSign, Eye, Users } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import AIChat from "@/components/AIChat";
@@ -27,24 +27,36 @@ const Index = () => {
     <div className="min-h-screen bg-background">
       <Header />
       
-      {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-blue-50 to-indigo-100 py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Hero Section with Housing Image */}
+      <section className="relative bg-gradient-to-br from-blue-50 to-indigo-100 py-20 overflow-hidden">
+        {/* Background Image */}
+        <div className="absolute inset-0 z-0">
+          <img 
+            src="https://images.unsplash.com/photo-1721322800607-8c38375eef04?auto=format&fit=crop&w=1920&h=1080&q=80" 
+            alt="Beautiful home interior" 
+            className="w-full h-full object-cover opacity-20"
+          />
+        </div>
+        
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
-              Find Your Perfect <span className="text-blue-600">Home</span>
+              Welcome to <span className="text-blue-600">HomeEase</span>
             </h1>
-            <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-              Discover amazing properties, connect with trusted agents, and make your dream home a reality with HomeEase.
+            <p className="text-xl text-gray-700 mb-4 max-w-3xl mx-auto font-medium">
+              Your journey to the perfect home starts here. We connect you directly with homeowners and landlords.
+            </p>
+            <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
+              Skip the middleman, save on fees, and find your dream home with complete transparency and trust.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="bg-blue-600 hover:bg-blue-700" onClick={() => navigate('/listings')}>
+              <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-lg px-8 py-3" onClick={() => navigate('/listings')}>
                 <Search className="mr-2 h-5 w-5" />
-                Browse Properties
+                Find Your Home
               </Button>
               {!user && (
-                <Button size="lg" variant="outline" onClick={() => navigate('/auth')}>
-                  Get Started
+                <Button size="lg" variant="outline" className="text-lg px-8 py-3" onClick={() => navigate('/auth')}>
+                  Join HomeEase
                 </Button>
               )}
             </div>
@@ -74,7 +86,7 @@ const Index = () => {
           <div className="text-center mb-16">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">Why Choose HomeEase?</h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              We make finding and securing your perfect home simple, secure, and stress-free.
+              We make finding and securing your perfect home simple, secure, and affordable.
             </p>
           </div>
           
@@ -132,25 +144,36 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Statistics Section */}
+      {/* Benefits Section - Replacing Statistics */}
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Experience the HomeEase Difference</h2>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              Connect directly with property owners and enjoy these exclusive benefits
+            </p>
+          </div>
+          
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
-            <div>
-              <div className="text-4xl font-bold text-blue-600 mb-2">10K+</div>
-              <div className="text-gray-600">Properties Listed</div>
+            <div className="p-6 rounded-lg bg-blue-50 hover:bg-blue-100 transition-colors">
+              <DollarSign className="h-12 w-12 text-blue-600 mx-auto mb-4" />
+              <div className="text-xl font-bold text-blue-600 mb-2">No Agent Fees</div>
+              <div className="text-gray-600">Connect directly with owners and save thousands</div>
             </div>
-            <div>
-              <div className="text-4xl font-bold text-green-600 mb-2">5K+</div>
-              <div className="text-gray-600">Happy Customers</div>
+            <div className="p-6 rounded-lg bg-green-50 hover:bg-green-100 transition-colors">
+              <Eye className="h-12 w-12 text-green-600 mx-auto mb-4" />
+              <div className="text-xl font-bold text-green-600 mb-2">Full Transparency</div>
+              <div className="text-gray-600">See all costs upfront with no hidden charges</div>
             </div>
-            <div>
-              <div className="text-4xl font-bold text-purple-600 mb-2">50+</div>
-              <div className="text-gray-600">Cities Covered</div>
+            <div className="p-6 rounded-lg bg-purple-50 hover:bg-purple-100 transition-colors">
+              <Home className="h-12 w-12 text-purple-600 mx-auto mb-4" />
+              <div className="text-xl font-bold text-purple-600 mb-2">Affordable Homes</div>
+              <div className="text-gray-600">Find quality homes within your budget</div>
             </div>
-            <div>
-              <div className="text-4xl font-bold text-orange-600 mb-2">24/7</div>
-              <div className="text-gray-600">Support Available</div>
+            <div className="p-6 rounded-lg bg-orange-50 hover:bg-orange-100 transition-colors">
+              <Users className="h-12 w-12 text-orange-600 mx-auto mb-4" />
+              <div className="text-xl font-bold text-orange-600 mb-2">Direct Connection</div>
+              <div className="text-gray-600">Speak directly with property owners</div>
             </div>
           </div>
         </div>

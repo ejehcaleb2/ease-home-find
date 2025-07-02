@@ -1,14 +1,26 @@
 
 import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { Home, Search, User, Menu, X } from "lucide-react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Home, Search, User, Menu, X, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/hooks/useAuth";
 
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
+  const { user, signOut } = useAuth();
 
   const isActive = (path: string) => location.pathname === path;
+
+  const handleAuthClick = () => {
+    navigate('/auth');
+  };
+
+  const handleSignOut = async () => {
+    await signOut();
+    navigate('/');
+  };
 
   return (
     <header className="bg-white shadow-sm border-b sticky top-0 z-40">
@@ -60,17 +72,25 @@ const Header = () => {
 
           {/* Desktop Auth Buttons */}
           <div className="hidden md:flex items-center space-x-4">
-            <Link to="/auth">
-              <Button variant="ghost" size="sm">
-                <User className="h-4 w-4 mr-2" />
-                Login
-              </Button>
-            </Link>
-            <Link to="/auth">
-              <Button size="sm" className="bg-blue-600 hover:bg-blue-700">
-                Sign Up
-              </Button>
-            </Link>
+            {user ? (
+              <div className="flex items-center space-x-4">
+                <span className="text-gray-600">Welcome back!</span>
+                <Button variant="ghost" size="sm" onClick={handleSignOut}>
+                  <LogOut className="h-4 w-4 mr-2" />
+                  Logout
+                </Button>
+              </div>
+            ) : (
+              <>
+                <Button variant="ghost" size="sm" onClick={handleAuthClick}>
+                  <User className="h-4 w-4 mr-2" />
+                  Login
+                </Button>
+                <Button size="sm" className="bg-blue-600 hover:bg-blue-700" onClick={handleAuthClick}>
+                  Sign Up
+                </Button>
+              </>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -127,17 +147,22 @@ const Header = () => {
                 Contact
               </Link>
               <div className="flex flex-col space-y-2 pt-4 border-t">
-                <Link to="/auth" onClick={() => setIsMobileMenuOpen(false)}>
-                  <Button variant="ghost" size="sm" className="w-full justify-start">
-                    <User className="h-4 w-4 mr-2" />
-                    Login
+                {user ? (
+                  <Button variant="ghost" size="sm" className="w-full justify-start" onClick={handleSignOut}>
+                    <LogOut className="h-4 w-4 mr-2" />
+                    Logout
                   </Button>
-                </Link>
-                <Link to="/auth" onClick={() => setIsMobileMenuOpen(false)}>
-                  <Button size="sm" className="w-full bg-blue-600 hover:bg-blue-700">
-                    Sign Up
-                  </Button>
-                </Link>
+                ) : (
+                  <>
+                    <Button variant="ghost" size="sm" className="w-full justify-start" onClick={handleAuthClick}>
+                      <User className="h-4 w-4 mr-2" />
+                      Login
+                    </Button>
+                    <Button size="sm" className="w-full bg-blue-600 hover:bg-blue-700" onClick={handleAuthClick}>
+                      Sign Up
+                    </Button>
+                  </>
+                )}
               </div>
             </nav>
           </div>
