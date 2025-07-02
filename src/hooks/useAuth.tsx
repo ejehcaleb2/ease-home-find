@@ -96,6 +96,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         return { error: error.message };
       }
 
+      toast({
+        title: "Account Created!",
+        description: "Welcome to HomeEase! You can now sign in.",
+      });
+
       return {};
     } catch (error) {
       console.error('Error verifying OTP:', error);

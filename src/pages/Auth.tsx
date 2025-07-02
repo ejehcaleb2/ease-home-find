@@ -1,4 +1,5 @@
-import { useState } from "react";
+
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Eye, EyeOff, User, Mail, Lock, Home } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -16,11 +17,17 @@ const Auth = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [showOTPVerification, setShowOTPVerification] = useState(false);
-  const [demoOTP, setDemoOTP] = useState("");
   
   const navigate = useNavigate();
   const { toast } = useToast();
-  const { signIn, sendOTP, signInWithGoogle } = useAuth();
+  const { signIn, sendOTP, signInWithGoogle, user } = useAuth();
+
+  // Redirect to home if user is already logged in
+  useEffect(() => {
+    if (user) {
+      navigate("/");
+    }
+  }, [user, navigate]);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -61,7 +68,7 @@ const Auth = () => {
           variant: "destructive",
         });
       } else {
-        navigate("/");
+        // Redirect will happen automatically via useEffect when user state changes
       }
     } else {
       // Sign up logic with OTP
