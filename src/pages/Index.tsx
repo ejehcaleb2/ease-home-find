@@ -1,15 +1,15 @@
-
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Search, Heart, Shield, MessageCircle, Sparkles, MapPin, Star, DollarSign, Eye, Users } from "lucide-react";
+import { Search, Heart, Shield, MessageCircle, MapPin, Star, DollarSign, Eye, Users } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import AIChat from "@/components/AIChat";
 import PropertyRecommendations from "@/components/PropertyRecommendations";
 import QuickActions from "@/components/QuickActions";
 import { useAuth } from "@/hooks/useAuth";
+import Logo from "@/components/Logo";
 
 const Index = () => {
   const { user, loading } = useAuth();
@@ -42,9 +42,7 @@ const Index = () => {
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <div className="flex justify-center mb-6">
-              <div className="w-16 h-16 bg-gradient-to-br from-blue-600 to-purple-600 rounded-2xl flex items-center justify-center">
-                <Sparkles className="h-8 w-8 text-white" />
-              </div>
+              <Logo size="lg" />
             </div>
             <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
               Welcome to <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">PropLink</span>
