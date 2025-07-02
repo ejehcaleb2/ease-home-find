@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Search, Heart, Shield, MessageCircle, Home, MapPin, Star, DollarSign, Eye, Users } from "lucide-react";
+import { Search, Heart, Shield, MessageCircle, Sparkles, MapPin, Star, DollarSign, Eye, Users } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import AIChat from "@/components/AIChat";
@@ -27,21 +27,27 @@ const Index = () => {
     <div className="min-h-screen bg-background">
       <Header />
       
-      {/* Hero Section with Housing Image */}
+      {/* Hero Section with Modern Design */}
       <section className="relative bg-gradient-to-br from-blue-50 to-indigo-100 py-20 overflow-hidden">
-        {/* Background Image */}
+        {/* Background Pattern */}
         <div className="absolute inset-0 z-0">
-          <img 
-            src="https://images.unsplash.com/photo-1721322800607-8c38375eef04?auto=format&fit=crop&w=1920&h=1080&q=80" 
-            alt="Beautiful home interior" 
-            className="w-full h-full object-cover opacity-20"
-          />
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-600/10 to-purple-600/10"></div>
+          <div className="absolute top-0 left-0 w-full h-full">
+            <div className="absolute top-10 left-10 w-20 h-20 bg-blue-400/20 rounded-full blur-xl"></div>
+            <div className="absolute top-32 right-20 w-32 h-32 bg-purple-400/20 rounded-full blur-xl"></div>
+            <div className="absolute bottom-20 left-32 w-24 h-24 bg-indigo-400/20 rounded-full blur-xl"></div>
+          </div>
         </div>
         
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
+            <div className="flex justify-center mb-6">
+              <div className="w-16 h-16 bg-gradient-to-br from-blue-600 to-purple-600 rounded-2xl flex items-center justify-center">
+                <Sparkles className="h-8 w-8 text-white" />
+              </div>
+            </div>
             <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
-              Welcome to <span className="text-blue-600">HomeEase</span>
+              Welcome to <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">PropLink</span>
             </h1>
             <p className="text-xl text-gray-700 mb-4 max-w-3xl mx-auto font-medium">
               Your journey to the perfect home starts here. We connect you directly with homeowners and landlords.
@@ -50,13 +56,13 @@ const Index = () => {
               Skip the middleman, save on fees, and find your dream home with complete transparency and trust.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-lg px-8 py-3" onClick={() => navigate('/listings')}>
+              <Button size="lg" className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-lg px-8 py-3" onClick={() => navigate('/listings')}>
                 <Search className="mr-2 h-5 w-5" />
                 Find Your Home
               </Button>
               {!user && (
-                <Button size="lg" variant="outline" className="text-lg px-8 py-3" onClick={() => navigate('/auth')}>
-                  Join HomeEase
+                <Button size="lg" variant="outline" className="text-lg px-8 py-3 border-2 border-blue-600 text-blue-600 hover:bg-blue-50" onClick={() => navigate('/auth')}>
+                  Join PropLink
                 </Button>
               )}
             </div>
@@ -84,7 +90,7 @@ const Index = () => {
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Why Choose HomeEase?</h2>
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Why Choose PropLink?</h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
               We make finding and securing your perfect home simple, secure, and affordable.
             </p>
@@ -144,11 +150,11 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Benefits Section - Replacing Statistics */}
+      {/* Benefits Section */}
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Experience the HomeEase Difference</h2>
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Experience the PropLink Difference</h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
               Connect directly with property owners and enjoy these exclusive benefits
             </p>
@@ -166,7 +172,7 @@ const Index = () => {
               <div className="text-gray-600">See all costs upfront with no hidden charges</div>
             </div>
             <div className="p-6 rounded-lg bg-purple-50 hover:bg-purple-100 transition-colors">
-              <Home className="h-12 w-12 text-purple-600 mx-auto mb-4" />
+              <Sparkles className="h-12 w-12 text-purple-600 mx-auto mb-4" />
               <div className="text-xl font-bold text-purple-600 mb-2">Affordable Homes</div>
               <div className="text-gray-600">Find quality homes within your budget</div>
             </div>

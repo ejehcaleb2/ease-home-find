@@ -34,41 +34,54 @@ const Contact = () => {
     e.preventDefault();
     setIsLoading(true);
 
-    // Simulate form submission
-    setTimeout(() => {
-      toast({
-        title: "Message Sent Successfully!",
-        description: "We'll get back to you within 24 hours.",
-      });
-      setFormData({
-        name: "",
-        email: "",
-        phone: "",
-        subject: "",
-        message: "",
-        inquiryType: ""
-      });
-      setIsLoading(false);
-    }, 1000);
+    // Create WhatsApp message
+    const whatsappMessage = `New Contact Form Submission:
+Name: ${formData.name}
+Email: ${formData.email}
+Phone: ${formData.phone}
+Subject: ${formData.subject}
+Inquiry Type: ${formData.inquiryType}
+Message: ${formData.message}`;
+
+    const encodedMessage = encodeURIComponent(whatsappMessage);
+    const whatsappUrl = `https://wa.me/2349077007934?text=${encodedMessage}`;
+
+    // Open WhatsApp
+    window.open(whatsappUrl, '_blank');
+
+    toast({
+      title: "Message Sent to WhatsApp!",
+      description: "Your message has been forwarded to WhatsApp. We'll get back to you soon.",
+    });
+
+    setFormData({
+      name: "",
+      email: "",
+      phone: "",
+      subject: "",
+      message: "",
+      inquiryType: ""
+    });
+    setIsLoading(false);
   };
 
   const contactInfo = [
     {
       icon: <Phone className="h-6 w-6" />,
       title: "Phone",
-      details: ["+234 803 123 4567", "+234 807 890 1234"],
+      details: ["+234 907 700 7934"],
       description: "Mon-Fri 8AM-6PM, Sat 9AM-2PM"
     },
     {
       icon: <Mail className="h-6 w-6" />,
       title: "Email",
-      details: ["support@homeease.ng", "info@homeease.ng"],
+      details: ["ejehcalebthefirst@gmail.com"],
       description: "We respond within 24 hours"
     },
     {
       icon: <MapPin className="h-6 w-6" />,
       title: "Office",
-      details: ["123 Allen Avenue, Ikeja", "Lagos State, Nigeria"],
+      details: ["Ilaje Bariga", "Lagos, Nigeria"],
       description: "Visit us during business hours"
     },
     {
@@ -90,7 +103,7 @@ const Contact = () => {
     },
     {
       question: "Do I pay any agent fees?",
-      answer: "No agent fees at all! HomeEase connects you directly with property owners."
+      answer: "No agent fees at all! We connect you directly with property owners."
     },
     {
       question: "How do I contact property owners?",
@@ -120,7 +133,7 @@ const Contact = () => {
               <CardHeader>
                 <CardTitle className="text-2xl">Send us a Message</CardTitle>
                 <p className="text-gray-600">
-                  Fill out the form below and we'll get back to you as soon as possible.
+                  Fill out the form below and we'll get back to you via WhatsApp.
                 </p>
               </CardHeader>
               <CardContent>
@@ -211,11 +224,11 @@ const Contact = () => {
                     disabled={isLoading}
                   >
                     {isLoading ? (
-                      "Sending Message..."
+                      "Sending to WhatsApp..."
                     ) : (
                       <>
-                        <Send className="h-4 w-4 mr-2" />
-                        Send Message
+                        <MessageCircle className="h-4 w-4 mr-2" />
+                        Send to WhatsApp
                       </>
                     )}
                   </Button>
@@ -257,7 +270,7 @@ const Contact = () => {
                   Need immediate help? Chat with us on WhatsApp
                 </p>
                 <a
-                  href="https://wa.me/2348031234567"
+                  href="https://wa.me/2349077007934"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -300,7 +313,7 @@ const Contact = () => {
                 View All FAQs
               </Button>
             </a>
-            <a href="tel:+2348031234567" className="inline-block">
+            <a href="tel:+2349077007934" className="inline-block">
               <Button className="bg-blue-600 hover:bg-blue-700">
                 <Phone className="h-4 w-4 mr-2" />
                 Call Us Now
