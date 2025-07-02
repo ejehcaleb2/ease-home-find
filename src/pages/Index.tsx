@@ -7,17 +7,14 @@ import { Search, Heart, Shield, MessageCircle, Home, MapPin, Star } from "lucide
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import AIChat from "@/components/AIChat";
+import PropertyRecommendations from "@/components/PropertyRecommendations";
+import MarketInsights from "@/components/MarketInsights";
+import QuickActions from "@/components/QuickActions";
 import { useAuth } from "@/hooks/useAuth";
 
 const Index = () => {
   const { user, loading } = useAuth();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!loading && user) {
-      navigate('/dashboard');
-    }
-  }, [user, loading, navigate]);
 
   if (loading) {
     return (
@@ -46,16 +43,41 @@ const Index = () => {
                 <Search className="mr-2 h-5 w-5" />
                 Browse Properties
               </Button>
-              <Button size="lg" variant="outline" onClick={() => navigate('/auth')}>
-                Get Started
-              </Button>
+              {!user && (
+                <Button size="lg" variant="outline" onClick={() => navigate('/auth')}>
+                  Get Started
+                </Button>
+              )}
             </div>
           </div>
         </div>
       </section>
 
-      {/* Features Section */}
+      {/* Quick Actions Section - Only for authenticated users */}
+      {user && (
+        <section className="py-20">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <QuickActions />
+          </div>
+        </section>
+      )}
+
+      {/* Property Recommendations Section */}
+      <section className="py-20 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <PropertyRecommendations />
+        </div>
+      </section>
+
+      {/* Market Insights Section */}
       <section className="py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <MarketInsights />
+        </div>
+      </section>
+
+      {/* Features Section */}
+      <section className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">Why Choose HomeEase?</h2>
@@ -105,7 +127,7 @@ const Index = () => {
       </section>
 
       {/* AI Chat Section */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">Ask Our AI Assistant</h2>
@@ -119,7 +141,7 @@ const Index = () => {
       </section>
 
       {/* Statistics Section */}
-      <section className="py-20">
+      <section className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
             <div>
