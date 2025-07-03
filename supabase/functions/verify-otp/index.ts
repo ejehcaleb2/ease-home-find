@@ -50,7 +50,7 @@ serve(async (req) => {
 
       if (!otpError && otpData) {
         isValidOTP = true
-        // Mark OTP as used
+        // Mark OTP as used only for real OTP codes
         await supabaseAdmin
           .from('otp_codes')
           .update({ is_used: true })
