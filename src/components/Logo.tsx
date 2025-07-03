@@ -14,7 +14,7 @@ const Logo = ({ className = "", size = 'md' }: LogoProps) => {
   };
 
   return (
-    <div className={`${sizeClasses[size]} bg-gradient-to-br from-blue-600 to-purple-600 rounded-xl flex items-center justify-center ${className}`}>
+    <div className={`${sizeClasses[size]} bg-gradient-to-br from-blue-500 to-purple-500 rounded-lg flex items-center justify-center ${className}`}>
       <svg
         viewBox="0 0 24 24"
         fill="none"

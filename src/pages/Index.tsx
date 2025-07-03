@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Search, Heart, Shield, MessageCircle, MapPin, Star, DollarSign, Eye, Users } from "lucide-react";
+import { Search, Heart, Shield, MessageCircle, MapPin, Star, DollarSign, Eye, Users, Sparkles } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import AIChat from "@/components/AIChat";
@@ -45,7 +45,7 @@ const Index = () => {
               <Logo size="lg" />
             </div>
             <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
-              Welcome to <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">PropLink</span>
+              Welcome to <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">HomeEase</span>
             </h1>
             <p className="text-xl text-gray-700 mb-4 max-w-3xl mx-auto font-medium">
               Your journey to the perfect home starts here. We connect you directly with homeowners and landlords.
@@ -60,7 +60,7 @@ const Index = () => {
               </Button>
               {!user && (
                 <Button size="lg" variant="outline" className="text-lg px-8 py-3 border-2 border-blue-600 text-blue-600 hover:bg-blue-50" onClick={() => navigate('/auth')}>
-                  Join PropLink
+                  Join HomeEase
                 </Button>
               )}
             </div>
@@ -88,7 +88,7 @@ const Index = () => {
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Why Choose PropLink?</h2>
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Why Choose HomeEase?</h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
               We make finding and securing your perfect home simple, secure, and affordable.
             </p>
@@ -152,7 +152,7 @@ const Index = () => {
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Experience the PropLink Difference</h2>
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Experience the HomeEase Difference</h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
               Connect directly with property owners and enjoy these exclusive benefits
             </p>
