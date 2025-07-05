@@ -1,22 +1,16 @@
-
 import { Users, Target, Award, Heart, Shield, Home } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-
 
 const About = () => {
   const team = [
     {
       name: "Adebayo Johnson",
       role: "CEO & Founder",
-      
-      
-  
+      image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face",
       description: "10+ years in real estate and technology"
-    },
-    
-    
+    }
   ];
 
   const values = [
