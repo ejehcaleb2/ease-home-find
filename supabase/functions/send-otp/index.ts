@@ -72,25 +72,8 @@ serve(async (req) => {
     try {
       const resend = new Resend(resendApiKey)
       
-      // For testing purposes, if the email is not the verified domain owner's email,
-      // we'll show the OTP in the console and return a special message
-      const isTestEmail = email !== 'princefocus008@gmail.com'
-      
-      if (isTestEmail) {
-        console.log(`TEST MODE: OTP for ${email} is: ${otpCode}`)
-        return new Response(
-          JSON.stringify({ 
-            message: 'OTP generated successfully',
-            test_mode: true,
-            test_otp: otpCode,
-            note: 'In production, this would be sent via email. For testing, the OTP is shown here.'
-          }),
-          { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-        )
-      }
-      
       const emailResponse = await resend.emails.send({
-        from: "HomeEase <noreply@resend.dev>",
+        from: "HomeEase <onboarding@resend.dev>",
         to: [email],
         subject: "Your HomeEase Verification Code",
         html: `
@@ -139,14 +122,15 @@ serve(async (req) => {
     } catch (emailError) {
       console.error('Error sending email:', emailError)
       
-      // If it's a Resend domain verification error, provide helpful guidance
-      if (emailError.message.includes('verify a domain') || emailError.message.includes('testing emails')) {
+      // If it's a Resend domain verification error, provide helpful guidance with test mode fallback
+      if (emailError.message.includes('verify a domain') || emailError.message.includes('testing emails') || emailError.message.includes('can only send testing emails')) {
+        console.log(`FALLBACK TO TEST MODE: OTP for ${email} is: ${otpCode}`)
         return new Response(
           JSON.stringify({ 
-            error: 'Email service is in test mode. Please use princefocus008@gmail.com for testing, or verify your domain at resend.com/domains to send to other addresses.',
+            message: 'OTP generated successfully',
             test_mode: true,
             test_otp: otpCode,
-            note: 'For testing purposes, here is your OTP code.'
+            note: 'Email service requires domain verification. To send real emails, please verify your domain at resend.com/domains. For now, here is your OTP code.'
           }),
           { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
         )
