@@ -4,26 +4,19 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
+
 const About = () => {
   const team = [
     {
       name: "Adebayo Johnson",
       role: "CEO & Founder",
-      image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&h=300&fit=crop&crop=face",
+      
+      
+  
       description: "10+ years in real estate and technology"
     },
-    {
-      name: "Funmi Adelaja",
-      role: "Head of Operations",
-      image: "https://images.unsplash.com/photo-1494790108755-2616b612b77c?w=300&h=300&fit=crop&crop=face",
-      description: "Expert in property verification and tenant relations"
-    },
-    {
-      name: "Emeka Okafor",
-      role: "Head of Technology",
-      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=300&fit=crop&crop=face",
-      description: "Building scalable solutions for the housing market"
-    }
+    
+    
   ];
 
   const values = [

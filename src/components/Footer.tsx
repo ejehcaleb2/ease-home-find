@@ -72,7 +72,7 @@ const Footer = () => {
               </li>
               <li>
                 <a
-                  href="https://wa.me/2341234567890"
+                  href="https://wa.me/2349077007934"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-gray-400 hover:text-white transition-colors"
@@ -89,7 +89,7 @@ const Footer = () => {
             <div className="space-y-3 text-sm">
               <div className="flex items-center space-x-2">
                 <Phone className="h-4 w-4 text-gray-400" />
-                <span className="text-gray-400">+234 123 456 7890</span>
+                <span className="text-gray-400">+2349077007934</span>
               </div>
               <div className="flex items-center space-x-2">
                 <Clock className="h-4 w-4 text-gray-400" />
