@@ -28,42 +28,28 @@ serve(async (req) => {
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '',
     )
 
-    // Default testing code (not visible to users)
-    const DEFAULT_TEST_CODE = '123456'
-    
-    let isValidOTP = false
+    // Verify OTP from database
+    const { data: otpData, error: otpError } = await supabaseAdmin
+      .from('otp_codes')
+      .select('*')
+      .eq('email', email)
+      .eq('otp_code', otp)
+      .eq('is_used', false)
+      .gt('expires_at', new Date().toISOString())
+      .single()
 
-    // Check if it's the default test code
-    if (otp === DEFAULT_TEST_CODE) {
-      console.log('Using default test code for verification')
-      isValidOTP = true
-    } else {
-      // Verify regular OTP from database
-      const { data: otpData, error: otpError } = await supabaseAdmin
-        .from('otp_codes')
-        .select('*')
-        .eq('email', email)
-        .eq('otp_code', otp)
-        .eq('is_used', false)
-        .gt('expires_at', new Date().toISOString())
-        .single()
-
-      if (!otpError && otpData) {
-        isValidOTP = true
-        // Mark OTP as used only for real OTP codes
-        await supabaseAdmin
-          .from('otp_codes')
-          .update({ is_used: true })
-          .eq('id', otpData.id)
-      }
-    }
-
-    if (!isValidOTP) {
+    if (otpError || !otpData) {
       return new Response(
         JSON.stringify({ error: 'Invalid or expired OTP' }),
         { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       )
     }
+
+    // Mark OTP as used
+    await supabaseAdmin
+      .from('otp_codes')
+      .update({ is_used: true })
+      .eq('id', otpData.id)
 
     // Create user account
     const { data: authData, error: authError } = await supabaseAdmin.auth.admin.createUser({

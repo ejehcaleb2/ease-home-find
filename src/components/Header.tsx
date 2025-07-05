@@ -1,8 +1,9 @@
 
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Search, User, Menu, X, LogOut } from "lucide-react";
+import { Search, User, Menu, X, LogOut, Settings } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { useAuth } from "@/hooks/useAuth";
 import Logo from "./Logo";
 
@@ -10,7 +11,7 @@ const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-  const { user, signOut } = useAuth();
+  const { user, userProfile, signOut } = useAuth();
 
   const isActive = (path: string) => location.pathname === path;
 
@@ -21,6 +22,10 @@ const Header = () => {
   const handleSignOut = async () => {
     await signOut();
     navigate('/');
+  };
+
+  const handleAccountSettings = () => {
+    navigate('/account');
   };
 
   return (
@@ -73,11 +78,28 @@ const Header = () => {
           <div className="hidden md:flex items-center space-x-4">
             {user ? (
               <div className="flex items-center space-x-4">
-                <span className="text-gray-600">Welcome back!</span>
-                <Button variant="ghost" size="sm" onClick={handleSignOut}>
-                  <LogOut className="h-4 w-4 mr-2" />
-                  Logout
-                </Button>
+                <span className="text-gray-600">
+                  Welcome, {userProfile?.full_name || user.user_metadata?.full_name || 'User'}!
+                </span>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" size="sm" className="flex items-center space-x-2">
+                      <User className="h-4 w-4" />
+                      <span>Account</span>
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-48">
+                    <DropdownMenuItem onClick={handleAccountSettings}>
+                      <Settings className="h-4 w-4 mr-2" />
+                      Account Settings
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={handleSignOut}>
+                      <LogOut className="h-4 w-4 mr-2" />
+                      Logout
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </div>
             ) : (
               <>
@@ -147,10 +169,19 @@ const Header = () => {
               </Link>
               <div className="flex flex-col space-y-2 pt-4 border-t">
                 {user ? (
-                  <Button variant="ghost" size="sm" className="w-full justify-start" onClick={handleSignOut}>
-                    <LogOut className="h-4 w-4 mr-2" />
-                    Logout
-                  </Button>
+                  <>
+                    <div className="text-gray-600 px-2">
+                      Welcome, {userProfile?.full_name || user.user_metadata?.full_name || 'User'}!
+                    </div>
+                    <Button variant="ghost" size="sm" className="w-full justify-start" onClick={handleAccountSettings}>
+                      <Settings className="h-4 w-4 mr-2" />
+                      Account Settings
+                    </Button>
+                    <Button variant="ghost" size="sm" className="w-full justify-start" onClick={handleSignOut}>
+                      <LogOut className="h-4 w-4 mr-2" />
+                      Logout
+                    </Button>
+                  </>
                 ) : (
                   <>
                     <Button variant="ghost" size="sm" className="w-full justify-start" onClick={handleAuthClick}>

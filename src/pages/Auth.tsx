@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Eye, EyeOff, User, Mail, Lock, Phone, MapPin } from "lucide-react";
@@ -70,8 +71,6 @@ const Auth = () => {
           description: error,
           variant: "destructive",
         });
-      } else {
-        // Redirect will happen automatically via useEffect when user state changes
       }
     } else {
       // Sign up logic with OTP
