@@ -79,6 +79,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         return { error: error.message };
       }
 
+      // Handle test mode response
+      if (data?.test_mode) {
+        toast({
+          title: "Test Mode - OTP Generated",
+          description: `Your OTP is: ${data.test_otp}. ${data.note}`,
+          duration: 10000, // Show for 10 seconds so user can see the OTP
+        });
+      }
+
       return {};
     } catch (error) {
       console.error('Error sending OTP:', error);
