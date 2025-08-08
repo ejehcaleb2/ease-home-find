@@ -57,6 +57,14 @@ const Header = () => {
               Listings
             </Link>
             <Link
+              to="/services"
+              className={`text-gray-600 hover:text-blue-600 transition-colors ${
+                isActive("/services") ? "text-blue-600 font-medium" : ""
+              }`}
+            >
+              Services
+            </Link>
+            <Link
               to="/about"
               className={`text-gray-600 hover:text-blue-600 transition-colors ${
                 isActive("/about") ? "text-blue-600 font-medium" : ""
@@ -157,6 +165,15 @@ const Header = () => {
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 About
+              </Link>
+              <Link
+                to="/services"
+                className={`text-gray-600 hover:text-blue-600 transition-colors ${
+                  isActive("/services") ? "text-blue-600 font-medium" : ""
+                }`}
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Services
               </Link>
               <Link
                 to="/contact"

@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Heart, Search, User, Settings, LogOut, MessageCircle, History } from "lucide-react";
+import { Heart, Search, User, Settings, LogOut, MessageCircle, History, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -227,6 +227,12 @@ const Dashboard = () => {
                   <Button variant="outline" className="w-full justify-start">
                     <Search className="h-4 w-4 mr-2" />
                     Browse Listings
+                  </Button>
+                </Link>
+                <Link to="/services">
+                  <Button variant="outline" className="w-full justify-start">
+                    <Sparkles className="h-4 w-4 mr-2" />
+                    HomeEase Services
                   </Button>
                 </Link>
                 <Button variant="outline" className="w-full justify-start">
