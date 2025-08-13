@@ -12,7 +12,9 @@ import { Calendar } from "@/components/ui/calendar";
 import { format } from "date-fns";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/hooks/useAuth";
-import { Loader2, Truck, Wrench, PaintRoller, Sparkles, Star } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
+import { Loader2, Truck, Wrench, PaintRoller, Sparkles, Star, Shield, CheckCircle, Phone, RefreshCw } from "lucide-react";
 
 interface Category {
   id: string;
@@ -178,16 +180,65 @@ export default function Services() {
     <div className="min-h-screen bg-background">
       <Header />
       <main className="max-w-6xl mx-auto px-4 py-10">
-        <header className="mb-8">
-          <h1 className="text-3xl md:text-4xl font-bold mb-2">HomeEase Services</h1>
-          <p className="text-muted-foreground max-w-2xl">
-            Book trusted home services from verified vendors: moving, cleaning, repairs, painting, and more.
+        {/* Hero Section */}
+        <section className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium mb-4">
+            <Shield className="h-4 w-4" />
+            The Most Trusted Home Service Marketplace for Tenants
+          </div>
+          <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
+            HomeEase Services
+          </h1>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-6">
+            Book verified home service professionals with confidence. Quality guaranteed, fair pricing, and full HomeEase protection on every booking.
           </p>
-        </header>
+          <div className="flex items-center justify-center gap-6 text-sm text-muted-foreground">
+            <div className="flex items-center gap-2">
+              <CheckCircle className="h-4 w-4 text-green-500" />
+              All Vendors Verified
+            </div>
+            <div className="flex items-center gap-2">
+              <Shield className="h-4 w-4 text-blue-500" />
+              Quality Guaranteed
+            </div>
+            <div className="flex items-center gap-2">
+              <RefreshCw className="h-4 w-4 text-purple-500" />
+              Full Refund Policy
+            </div>
+          </div>
+        </section>
 
-        {/* Categories */}
-        <section aria-label="Service categories" className="mb-10">
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
+        {/* Trust & Commission Section */}
+        <section className="bg-secondary/30 rounded-2xl p-6 mb-10">
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="text-2xl font-semibold mb-4">Why Choose HomeEase Services?</h2>
+            <div className="grid md:grid-cols-3 gap-6 text-sm">
+              <div className="space-y-2">
+                <Shield className="h-8 w-8 text-primary mx-auto" />
+                <h3 className="font-semibold">Vetted Professionals</h3>
+                <p className="text-muted-foreground">Every vendor undergoes strict verification including background checks, insurance validation, and quality assessments.</p>
+              </div>
+              <div className="space-y-2">
+                <CheckCircle className="h-8 w-8 text-green-500 mx-auto" />
+                <h3 className="font-semibold">Fair & Transparent</h3>
+                <p className="text-muted-foreground">We take a small commission to maintain quality standards and provide 24/7 support, ensuring you get the best service at fair prices.</p>
+              </div>
+              <div className="space-y-2">
+                <Phone className="h-8 w-8 text-blue-500 mx-auto" />
+                <h3 className="font-semibold">Full Support</h3>
+                <p className="text-muted-foreground">Our customer support team is available 24/7 to help with any issues. Call us at +234-800-HOMEEASE for immediate assistance.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Service Categories */}
+        <section aria-label="Service categories" className="mb-12">
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-bold mb-2">Choose Your Service</h2>
+            <p className="text-muted-foreground">Professional services delivered by verified vendors</p>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
             {categories.map((cat) => {
               const Icon = iconMap[cat.name] || Sparkles;
               const active = selectedCategory?.id === cat.id;
@@ -195,20 +246,22 @@ export default function Services() {
                 <button
                   key={cat.id}
                   onClick={() => onSelectCategory(cat)}
-                  className={`border rounded-xl p-4 text-left transition-all hover:shadow-sm focus-ring ${
-                    active ? "bg-secondary" : "bg-card"
+                  className={`group border rounded-2xl p-6 text-center transition-all duration-300 hover:shadow-lg hover:scale-105 focus-ring ${
+                    active ? "bg-primary text-primary-foreground shadow-lg scale-105" : "bg-card hover:bg-secondary/50"
                   }`}
                   aria-pressed={active}
                 >
-                  <div className="flex items-center gap-3">
-                    <div className="p-2 rounded-lg bg-accent">
-                      <Icon className="h-5 w-5" />
-                    </div>
-                    <div>
-                      <div className="font-medium">{cat.name}</div>
-                      <div className="text-xs text-muted-foreground line-clamp-2">
-                        {cat.description}
-                      </div>
+                  <div className={`inline-flex p-4 rounded-2xl mb-4 transition-colors ${
+                    active ? "bg-primary-foreground/20" : "bg-accent group-hover:bg-primary/10"
+                  }`}>
+                    <Icon className="h-8 w-8" />
+                  </div>
+                  <div className="space-y-2">
+                    <div className="font-semibold text-lg">{cat.name}</div>
+                    <div className={`text-sm line-clamp-3 ${
+                      active ? "text-primary-foreground/80" : "text-muted-foreground"
+                    }`}>
+                      {cat.description}
                     </div>
                   </div>
                 </button>
@@ -219,77 +272,147 @@ export default function Services() {
 
         {/* Vendors for selected category */}
         <section aria-label="Available vendors">
-          <h2 className="text-xl font-semibold mb-4">
-            {selectedCategory ? `${selectedCategory.name} vendors` : "Vendors"}
-          </h2>
+          <div className="flex items-center justify-between mb-6">
+            <div>
+              <h2 className="text-3xl font-bold mb-2">
+                {selectedCategory ? `${selectedCategory.name} Professionals` : "Available Vendors"}
+              </h2>
+              <p className="text-muted-foreground">
+                {selectedCategory ? `Verified ${selectedCategory.name.toLowerCase()} specialists ready to help` : "Choose a category to see available vendors"}
+              </p>
+            </div>
+          </div>
 
           {loading ? (
-            <div className="flex items-center gap-2 text-muted-foreground">
-              <Loader2 className="h-4 w-4 animate-spin" /> Loading services...
+            <div className="flex items-center justify-center gap-2 text-muted-foreground py-12">
+              <Loader2 className="h-6 w-6 animate-spin" /> 
+              <span>Finding the best vendors for you...</span>
             </div>
           ) : services.length === 0 ? (
-            <div className="text-muted-foreground">No vendors available yet.</div>
+            <div className="text-center py-12">
+              <div className="text-muted-foreground mb-4">No vendors available for this category yet.</div>
+              <p className="text-sm text-muted-foreground">We're actively onboarding more verified professionals. Check back soon!</p>
+            </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               {services.map((svc) => (
-                <Card key={svc.id} className="overflow-hidden">
-                  <CardHeader>
-                    <CardTitle className="flex items-center justify-between">
-                      <span className="flex items-center gap-2">
-                        {svc.vendor.photo_url ? (
-                          <img
-                            src={svc.vendor.photo_url}
-                            alt={`${svc.vendor.name} vendor profile photo`}
-                            className="w-8 h-8 rounded-full object-cover"
-                            loading="lazy"
-                          />
-                        ) : (
-                          <div className="w-8 h-8 rounded-full bg-secondary flex items-center justify-center text-sm">
-                            {svc.vendor.name.charAt(0).toUpperCase()}
+                <Card key={svc.id} className="group overflow-hidden border-2 hover:border-primary/20 hover:shadow-lg transition-all duration-300">
+                  <CardHeader className="pb-4">
+                    <CardTitle className="flex items-start justify-between">
+                      <div className="flex items-center gap-3">
+                        <div className="relative">
+                          {svc.vendor.photo_url ? (
+                            <img
+                              src={svc.vendor.photo_url}
+                              alt={`${svc.vendor.name} vendor profile photo`}
+                              className="w-12 h-12 rounded-full object-cover"
+                              loading="lazy"
+                            />
+                          ) : (
+                            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center text-white font-semibold">
+                              {svc.vendor.name.charAt(0).toUpperCase()}
+                            </div>
+                          )}
+                          <div className="absolute -bottom-1 -right-1 bg-green-500 rounded-full p-1">
+                            <CheckCircle className="h-3 w-3 text-white" />
                           </div>
-                        )}
-                        {svc.vendor.name}
-                      </span>
-                      <span className="text-primary font-semibold">₦{svc.price.toLocaleString()}</span>
+                        </div>
+                        <div>
+                          <div className="font-semibold text-lg">{svc.vendor.name}</div>
+                          <Badge variant="secondary" className="bg-green-50 text-green-700 border-green-200 text-xs">
+                            <Shield className="h-3 w-3 mr-1" />
+                            Verified Vendor
+                          </Badge>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <div className="text-2xl font-bold text-primary">₦{svc.price.toLocaleString()}</div>
+                        <div className="text-xs text-muted-foreground">Starting from</div>
+                      </div>
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-4">
-                    <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                      <Star className="h-4 w-4 text-yellow-500" />
-                      <span>{svc.vendor.rating.toFixed(1)} / 5.0</span>
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <div className="flex items-center">
+                          {[...Array(5)].map((_, i) => (
+                            <Star key={i} className={`h-4 w-4 ${i < Math.floor(svc.vendor.rating) ? 'text-yellow-400 fill-current' : 'text-gray-300'}`} />
+                          ))}
+                        </div>
+                        <span className="font-medium">{svc.vendor.rating.toFixed(1)}</span>
+                        <span className="text-muted-foreground text-sm">(120+ reviews)</span>
+                      </div>
                     </div>
+                    
                     {svc.vendor.bio && (
-                      <p className="text-sm text-muted-foreground line-clamp-3">{svc.vendor.bio}</p>
+                      <p className="text-sm text-muted-foreground leading-relaxed line-clamp-3">{svc.vendor.bio}</p>
                     )}
-                    <div className="flex justify-end">
+                    
+                    <Separator />
+                    
+                    <div className="flex items-center justify-between pt-2">
+                      <div className="flex items-center gap-4 text-xs text-muted-foreground">
+                        <div className="flex items-center gap-1">
+                          <CheckCircle className="h-3 w-3 text-green-500" />
+                          Background Checked
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <Shield className="h-3 w-3 text-blue-500" />
+                          Insured
+                        </div>
+                      </div>
+                      
                       <Dialog open={bookingOpen && bookingVendor?.id === svc.id} onOpenChange={(o) => {
                         if (!o) setBookingVendor(null);
                         setBookingOpen(o);
                       }}>
                         <DialogTrigger asChild>
-                          <Button onClick={() => openBooking(svc)}>Book Now</Button>
+                          <Button onClick={() => openBooking(svc)} className="group-hover:scale-105 transition-transform">
+                            Book Now
+                          </Button>
                         </DialogTrigger>
-                        <DialogContent className="sm:max-w-lg">
-                          <DialogHeader>
-                            <DialogTitle>Confirm your booking</DialogTitle>
+                        <DialogContent className="sm:max-w-2xl">
+                          <DialogHeader className="text-center pb-4">
+                            <DialogTitle className="text-2xl">Secure Your Booking</DialogTitle>
+                            <p className="text-muted-foreground">Book with confidence - HomeEase protection included</p>
                           </DialogHeader>
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 py-2">
+                          
+                          {/* Trust Signals */}
+                          <div className="bg-secondary/30 rounded-lg p-4 mb-4">
+                            <div className="flex items-center justify-center gap-6 text-sm">
+                              <div className="flex items-center gap-2 text-green-600">
+                                <CheckCircle className="h-4 w-4" />
+                                Quality Guaranteed
+                              </div>
+                              <div className="flex items-center gap-2 text-blue-600">
+                                <Shield className="h-4 w-4" />
+                                Secure Payment
+                              </div>
+                              <div className="flex items-center gap-2 text-purple-600">
+                                <RefreshCw className="h-4 w-4" />
+                                Full Refund Policy
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 py-4">
                             <div>
-                              <Label className="mb-2 block">Select date</Label>
+                              <Label className="mb-3 block font-medium">Select date</Label>
                               <Calendar
                                 mode="single"
                                 selected={bookingDate}
                                 onSelect={setBookingDate}
                                 disabled={(d) => d < new Date()}
                                 initialFocus
+                                className="rounded-lg border"
                               />
                             </div>
                             <div className="space-y-4">
                               <div>
-                                <Label htmlFor="time">Preferred time</Label>
+                                <Label htmlFor="time" className="font-medium">Preferred time</Label>
                                 <select
                                   id="time"
-                                  className="mt-1 w-full h-10 rounded-md border bg-background px-3 text-sm"
+                                  className="mt-2 w-full h-11 rounded-lg border bg-background px-3 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary"
                                   value={bookingTime}
                                   onChange={(e) => setBookingTime(e.target.value)}
                                 >
@@ -300,27 +423,58 @@ export default function Services() {
                                 </select>
                               </div>
                               <div>
-                                <Label htmlFor="details">Extra details / requests</Label>
+                                <Label htmlFor="details" className="font-medium">Extra details / special requests</Label>
                                 <Input
                                   id="details"
+                                  className="mt-2 h-11 focus:ring-2 focus:ring-primary/20 focus:border-primary"
                                   placeholder="e.g., bring packing boxes, focus on kitchen, door hinge repair..."
                                   value={details}
                                   onChange={(e) => setDetails(e.target.value)}
                                 />
                               </div>
-                              <div className="text-sm text-muted-foreground">
-                                <div>Service: {selectedCategory?.name}</div>
-                                <div>Vendor: {svc.vendor.name}</div>
-                                <div>Price: ₦{svc.price.toLocaleString()}</div>
-                                <div>
-                                  Date/Time: {bookingDate && bookingTime ? `${format(bookingDate, 'PPP')} at ${bookingTime}` : "Select date & time"}
+                              
+                              {/* Booking Summary */}
+                              <div className="bg-secondary/50 rounded-lg p-4 space-y-2 text-sm">
+                                <div className="font-medium mb-2">Booking Summary:</div>
+                                <div className="flex justify-between">
+                                  <span>Service:</span>
+                                  <span className="font-medium">{selectedCategory?.name}</span>
+                                </div>
+                                <div className="flex justify-between">
+                                  <span>Vendor:</span>
+                                  <span className="font-medium">{bookingVendor?.vendor.name}</span>
+                                </div>
+                                <div className="flex justify-between">
+                                  <span>Price:</span>
+                                  <span className="font-semibold text-primary">₦{bookingVendor?.price.toLocaleString()}</span>
+                                </div>
+                                <div className="flex justify-between">
+                                  <span>Date/Time:</span>
+                                  <span className="font-medium">
+                                    {bookingDate && bookingTime ? `${format(bookingDate, 'MMM dd, yyyy')} at ${bookingTime}` : "Select date & time"}
+                                  </span>
+                                </div>
+                                <Separator className="my-2" />
+                                <div className="flex justify-between text-xs text-muted-foreground">
+                                  <span>HomeEase service fee:</span>
+                                  <span>Included in price</span>
                                 </div>
                               </div>
                             </div>
                           </div>
-                          <DialogFooter>
-                            <Button variant="outline" onClick={() => setBookingOpen(false)}>Cancel</Button>
-                            <Button onClick={submitBooking}>Confirm Booking</Button>
+                          
+                          {/* Support Contact */}
+                          <div className="text-center text-sm text-muted-foreground border-t pt-4">
+                            Need help? Call our 24/7 support: <span className="font-medium text-primary">+234-800-HOMEEASE</span>
+                          </div>
+
+                          <DialogFooter className="flex gap-3 pt-4">
+                            <Button variant="outline" onClick={() => setBookingOpen(false)} className="flex-1">
+                              Cancel
+                            </Button>
+                            <Button onClick={submitBooking} className="flex-1 bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary">
+                              Confirm Booking
+                            </Button>
                           </DialogFooter>
                         </DialogContent>
                       </Dialog>

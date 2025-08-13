@@ -57,7 +57,7 @@ const About = () => {
             <h1 className="text-4xl md:text-5xl font-bold">About HomeEase</h1>
           </div>
           <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">
-            Revolutionizing housing in Nigeria by connecting tenants directly to verified, affordable rental homes without the stress of agent fees.
+            Nigeria's most trusted housing and home services platform. Connecting tenants with verified rental homes and professional service providers - all without excessive fees.
           </p>
         </div>
       </section>
@@ -70,13 +70,13 @@ const About = () => {
               <h2 className="text-3xl font-bold mb-6">Our Story</h2>
               <div className="space-y-4 text-gray-600">
                 <p>
-                  HomeEase was born from a simple frustration: the difficulty of finding affordable, quality housing in Nigeria without paying excessive agent fees. Our founders experienced firsthand the challenges tenants face - from inflated prices to unreliable agents to unverified properties.
+                  HomeEase was born from a simple frustration: the difficulty of finding affordable, quality housing in Nigeria without paying excessive agent fees. Our founders experienced firsthand the challenges tenants face - from inflated prices to unreliable agents to unverified properties and poor service quality.
                 </p>
                 <p>
-                  In 2023, we decided to change this narrative. We built a platform that directly connects tenants with verified property owners, eliminating middlemen and reducing costs for everyone involved.
+                  In 2023, we decided to change this narrative. We built a comprehensive platform that directly connects tenants with verified property owners and trusted service providers, eliminating middlemen and reducing costs for everyone involved.
                 </p>
                 <p>
-                  Today, we're proud to have helped over 10,000 Nigerians find their perfect homes while saving millions in unnecessary agent fees. But we're just getting started.
+                  Today, we're proud to have helped over 10,000 Nigerians find their perfect homes and book reliable home services while saving millions in unnecessary fees. We're building Nigeria's most trusted housing ecosystem.
                 </p>
               </div>
             </div>
@@ -100,7 +100,7 @@ const About = () => {
               </CardHeader>
               <CardContent>
                 <p className="text-gray-600">
-                  To make quality housing accessible and affordable for every Nigerian by creating a transparent, direct connection between tenants and property owners.
+                  To make quality housing and home services accessible and affordable for every Nigerian by creating transparent, direct connections between tenants, property owners, and verified service providers.
                 </p>
               </CardContent>
             </Card>
@@ -112,7 +112,7 @@ const About = () => {
               </CardHeader>
               <CardContent>
                 <p className="text-gray-600">
-                  To become Africa's leading housing platform, where finding a home is simple, transparent, and stress-free for millions of people.
+                  To become Africa's leading integrated housing ecosystem, where finding a home and maintaining it through trusted services is simple, transparent, and stress-free for millions of people.
                 </p>
               </CardContent>
             </Card>
@@ -179,7 +179,7 @@ const About = () => {
         <section className="text-center bg-blue-50 rounded-lg p-12">
           <h2 className="text-3xl font-bold mb-4">Ready to Find Your Perfect Home?</h2>
           <p className="text-gray-600 mb-8 max-w-2xl mx-auto">
-            Join thousands of Nigerians who have found their dream homes through HomeEase. No agent fees, no stress, just quality homes at affordable prices.
+            Join thousands of Nigerians who have found their dream homes and trusted service providers through HomeEase. No excessive fees, no stress, just quality homes and reliable services at fair prices.
           </p>
           <div className="space-x-4">
             <a href="/listings" className="inline-block">

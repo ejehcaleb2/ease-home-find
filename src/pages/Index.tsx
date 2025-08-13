@@ -48,15 +48,19 @@ const Index = () => {
               Welcome to <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">HomeEase</span>
             </h1>
             <p className="text-xl text-gray-700 mb-4 max-w-3xl mx-auto font-medium">
-              Your journey to the perfect home starts here. We connect you directly with homeowners and landlords.
+              Nigeria's most trusted housing and home services platform. Find your perfect home and book trusted services - all in one place.
             </p>
             <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
-              Skip the middleman, save on fees, and find your dream home with complete transparency and trust.
+              Connect directly with verified property owners and professional service providers. No agent fees, no hidden costs, complete transparency.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button size="lg" className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-lg px-8 py-3" onClick={() => navigate('/listings')}>
                 <Search className="mr-2 h-5 w-5" />
                 Find Your Home
+              </Button>
+              <Button size="lg" variant="outline" className="text-lg px-8 py-3 border-2 border-purple-600 text-purple-600 hover:bg-purple-50" onClick={() => navigate('/services')}>
+                <Sparkles className="mr-2 h-5 w-5" />
+                Book Services
               </Button>
               {!user && (
                 <Button size="lg" variant="outline" className="text-lg px-8 py-3 border-2 border-blue-600 text-blue-600 hover:bg-blue-50" onClick={() => navigate('/auth')}>
@@ -90,11 +94,11 @@ const Index = () => {
           <div className="text-center mb-16">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">Why Choose HomeEase?</h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              We make finding and securing your perfect home simple, secure, and affordable.
+              Nigeria's comprehensive housing platform - from finding your home to maintaining it with trusted services.
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <Card className="text-center hover:shadow-lg transition-shadow">
               <CardHeader>
                 <Search className="h-12 w-12 text-blue-600 mx-auto mb-4" />
@@ -110,23 +114,35 @@ const Index = () => {
             <Card className="text-center hover:shadow-lg transition-shadow">
               <CardHeader>
                 <Shield className="h-12 w-12 text-green-600 mx-auto mb-4" />
-                <CardTitle>Verified Listings</CardTitle>
+                <CardTitle>Verified Network</CardTitle>
               </CardHeader>
               <CardContent>
                 <CardDescription>
-                  All properties are verified for authenticity, ensuring you get accurate information every time.
+                  All properties and service providers are verified for authenticity and quality assurance.
                 </CardDescription>
               </CardContent>
             </Card>
 
             <Card className="text-center hover:shadow-lg transition-shadow">
               <CardHeader>
-                <MessageCircle className="h-12 w-12 text-purple-600 mx-auto mb-4" />
+                <Sparkles className="h-12 w-12 text-purple-600 mx-auto mb-4" />
+                <CardTitle>Home Services</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <CardDescription>
+                  Book trusted professionals for moving, cleaning, repairs, and maintenance - all within our platform.
+                </CardDescription>
+              </CardContent>
+            </Card>
+
+            <Card className="text-center hover:shadow-lg transition-shadow">
+              <CardHeader>
+                <MessageCircle className="h-12 w-12 text-orange-600 mx-auto mb-4" />
                 <CardTitle>AI Assistant</CardTitle>
               </CardHeader>
               <CardContent>
                 <CardDescription>
-                  Get instant answers about properties, neighborhoods, and market insights from our AI assistant.
+                  Get instant answers about properties, neighborhoods, and service recommendations from our AI.
                 </CardDescription>
               </CardContent>
             </Card>
